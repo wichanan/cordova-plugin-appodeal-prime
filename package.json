@@ -1,0 +1,48 @@
+{
+  "version": "0.0.1",
+  "name": "cordova-appodeal-prime",
+  "cordova_name": "Cordova Plugin Appodeal Prime",
+  "cordova": {
+    "id": "cordova-admob-plus",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "description": "Cordova Appodeal Prime",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wichanan/cordova-plugin-appodeal-prime.git"
+  },
+  "files": [
+    "*.ts",
+    "*.md",
+    "*.xml",
+    "src",
+    "ts",
+    "www"
+  ],
+  "keywords": [
+    "appodeal",
+    "cordova",
+    "phonegap",
+    "npm",
+    "ads",
+	  "monetisation",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-appodeal-prime"
+  ],
+  "devDependencies": {
+    "cordova": "^9.0.0"
+  },
+  "bundledDependencies": [
+    "command-exists",
+    "xml2js",
+    "sax",
+    "xmlbuilder",
+    "lodash"
+  ],
+  "author": "Wichanan Thian",
+  "license": "MIT"
+}
