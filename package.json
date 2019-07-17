@@ -36,13 +36,6 @@
   "devDependencies": {
     "cordova": "^9.0.0"
   },
-  "bundledDependencies": [
-    "command-exists",
-    "xml2js",
-    "sax",
-    "xmlbuilder",
-    "lodash"
-  ],
   "author": "Wichanan Thian",
   "license": "MIT"
 }
