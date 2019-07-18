@@ -1,207 +1,252 @@
-var Appodeal = exports;
+var AppodealPrime = exports;
 
 var exec = require('cordova/exec');
 var cordova = require('cordova');
 
-Appodeal.INTERSTITIAL = 3;
-Appodeal.BANNER = 4;
-Appodeal.BANNER_BOTTOM = 8;
-Appodeal.BANNER_TOP = 16;
-Appodeal.REWARDED_VIDEO = 128;
-Appodeal.NON_SKIPPABLE_VIDEO = 256;
+/**
+ * @ignore
+ */
+function execute(method, args) {
+    return new Promise((resolve, reject) => {
+        exec(resolve, reject, 'FBANFree', method, [args])
+    });
+}
 
-Appodeal.BANNER_X_SMART = 0;
-Appodeal.BANNER_X_CENTER = 1;
-Appodeal.BANNER_X_LEFT = 2;
-Appodeal.BANNER_X_RIGHT = 3;
+var nextId = 100
+var adUnits = {}
 
-Appodeal.LogLevel = {
+function getAdUnitId(adUnitId) {
+    if (adUnits[adUnitId]) {
+      return adUnits[adUnitId]
+    }
+    adUnits[adUnitId] = nextId
+    nextId += 1
+    return adUnits[adUnitId]
+}
+
+function bannerConfig(placementID) {
+    return {
+        placementID: placementID,
+        adSize: 1,
+        position: 'bottom',
+        id: getAdUnitId(placementID)
+    }
+}
+
+function adConfig(placementID) {
+    return {
+        placementID: placementID,
+        id: getAdUnitId(placementID)
+    }
+}
+
+function nativeConfig(data) {
+    return {
+        position: data.position,
+        placementID: data.placementID,
+        id: getAdUnitId(data.placementID)
+    }
+}
+
+AppodealPrime.INTERSTITIAL = 3;
+AppodealPrime.BANNER = 4;
+AppodealPrime.BANNER_BOTTOM = 8;
+AppodealPrime.BANNER_TOP = 16;
+AppodealPrime.REWARDED_VIDEO = 128;
+AppodealPrime.NON_SKIPPABLE_VIDEO = 256;
+
+AppodealPrime.BANNER_X_SMART = 0;
+AppodealPrime.BANNER_X_CENTER = 1;
+AppodealPrime.BANNER_X_LEFT = 2;
+AppodealPrime.BANNER_X_RIGHT = 3;
+
+AppodealPrime.LogLevel = {
     NONE: 0,
     DEBUG: 1,
     VERBOSE: 2
 };
 
-Appodeal.Gender = {
+AppodealPrime.Gender = {
     OTHER: 0,
     MALE: 1,
     FEMALE: 2
 };
 
-Appodeal.pluginVersion = '3.0.4';
+AppodealPrime.pluginVersion = '0.0.1';
 
-Appodeal.initialize = function(appKey, adType) {
-    exec(null, null, "AppodealPlugin", "setPluginVersion", [Appodeal.pluginVersion]);
+AppodealPrime.initialize = function(appKey, adType) {
+    exec(null, null, "AppodealPlugin", "setPluginVersion", [AppodealPrime.pluginVersion]);
     exec(null, null, "AppodealPlugin", "initialize", [appKey, adType]);
 };
 
-Appodeal.show = function(adType, callback) {
+AppodealPrime.show = function(adType, callback) {
     exec(callback, null, "AppodealPlugin", "show", [adType]);
 };
 
-Appodeal.showWithPlacement = function(adType, placement, callback) {
+AppodealPrime.showWithPlacement = function(adType, placement, callback) {
     exec(callback, null, "AppodealPlugin", "showWithPlacement", [adType, placement]);
 };
 
-Appodeal.showBannerView = function(xAxis, yAxis, placement) {
+AppodealPrime.showBannerView = function(xAxis, yAxis, placement) {
     exec(null, null, "AppodealPlugin", "showBannerView", [xAxis, yAxis, placement]);
 };
 
-Appodeal.isLoaded = function(adType, callback) {
+AppodealPrime.isLoaded = function(adType, callback) {
     exec(callback, null, "AppodealPlugin", "isLoaded", [adType]);
 };
 
-Appodeal.cache = function(adType) {
+AppodealPrime.cache = function(adType) {
     exec(null, null, "AppodealPlugin", "cache", [adType]);
 };
 
-Appodeal.hide = function(adType) {
+AppodealPrime.hide = function(adType) {
     exec(null, null, "AppodealPlugin", "hide", [adType]);
 };
 
-Appodeal.destroy = function(adType) {
+AppodealPrime.destroy = function(adType) {
     exec(null, null, "AppodealPlugin", "destroy", [adType]);
 }
 
-Appodeal.setAutoCache = function(adType, autoCache) {
+AppodealPrime.setAutoCache = function(adType, autoCache) {
     exec(null, null, "AppodealPlugin", "setAutoCache", [adType, autoCache]);
 };
 
-Appodeal.isPrecache = function(adType, callback) {
+AppodealPrime.isPrecache = function(adType, callback) {
     exec(callback, null, "AppodealPlugin", "isPrecache", [adType]);
 };
 
-Appodeal.setBannerBackground = function(value) {
+AppodealPrime.setBannerBackground = function(value) {
     exec(null, null, "AppodealPlugin", "setBannerBackground", [value]);
 };
 
-Appodeal.setBannerAnimation = function(value) {
+AppodealPrime.setBannerAnimation = function(value) {
     exec(null, null, "AppodealPlugin", "setBannerAnimation", [value]);
 };
 
-Appodeal.setSmartBanners = function(value) {
+AppodealPrime.setSmartBanners = function(value) {
     exec(null, null, "AppodealPlugin", "setSmartBanners", [value]);
 };
 
-Appodeal.set728x90Banners = function(value) {
+AppodealPrime.set728x90Banners = function(value) {
     exec(null, null, "AppodealPlugin", "set728x90Banners", [value]);
 };
 
-Appodeal.setBannerOverLap = function(value) {
+AppodealPrime.setBannerOverLap = function(value) {
     exec(null, null, "AppodealPlugin", "setBannerOverLap", [value]);
 };
 
-Appodeal.setTesting = function(testing) {
+AppodealPrime.setTesting = function(testing) {
     exec(null, null, "AppodealPlugin", "setTesting", [testing]);
 };
 
-Appodeal.setLogLevel = function(loglevel) {
+AppodealPrime.setLogLevel = function(loglevel) {
     exec(null, null, "AppodealPlugin", "setLogLevel", [loglevel]);
 };
 
-Appodeal.setChildDirectedTreatment = function(value) {
+AppodealPrime.setChildDirectedTreatment = function(value) {
     exec(null, null, "AppodealPlugin", "setChildDirectedTreatment", [value]);
 };
 
-Appodeal.setTriggerOnLoadedOnPrecache = function(set) {
+AppodealPrime.setTriggerOnLoadedOnPrecache = function(set) {
     exec(null, null, "AppodealPlugin", "setOnLoadedTriggerBoth", [set]);
 };
 
-Appodeal.disableNetwork = function(network, adType) {
+AppodealPrime.disableNetwork = function(network, adType) {
     exec(null, null, "AppodealPlugin", "disableNetwork", [network]);
 };
 
-Appodeal.disableNetworkType = function(network, adType) {
+AppodealPrime.disableNetworkType = function(network, adType) {
     exec(null, null, "AppodealPlugin", "disableNetworkType", [network, adType]);
 };
 
-Appodeal.disableLocationPermissionCheck = function() {
+AppodealPrime.disableLocationPermissionCheck = function() {
     exec(null, null, "AppodealPlugin", "disableLocationPermissionCheck", []);
 };
 
-Appodeal.disableWriteExternalStoragePermissionCheck = function() {
+AppodealPrime.disableWriteExternalStoragePermissionCheck = function() {
     exec(null, null, "AppodealPlugin", "disableWriteExternalStoragePermissionCheck", []);
 };
 
-Appodeal.muteVideosIfCallsMuted = function(value) {
+AppodealPrime.muteVideosIfCallsMuted = function(value) {
     exec(null, null, "AppodealPlugin", "muteVideosIfCallsMuted", [value]);
 };
 
-Appodeal.showTestScreen = function(value) {
+AppodealPrime.showTestScreen = function(value) {
     exec(null, null, "AppodealPlugin", "showTestScreen", []);
 };
 
-Appodeal.getVersion = function(callback) {
+AppodealPrime.getVersion = function(callback) {
     exec(callback, null, "AppodealPlugin", "getVersion", []);
 };
 
-Appodeal.getPluginVersion = function(){
-    return Appodeal.pluginVersion;
+AppodealPrime.getPluginVersion = function(){
+    return AppodealPrime.pluginVersion;
 };
 
-Appodeal.isInitialized = function(callback) {
+AppodealPrime.isInitialized = function(callback) {
     exec(callback, null, "AppodealPlugin", "isInitalized", []);
 };
 
-Appodeal.canShow = function(adType, callback) {
+AppodealPrime.canShow = function(adType, callback) {
     exec(callback, null, "AppodealPlugin", "canShow", [adType]);
 };
 
-Appodeal.canShowWithPlacement = function(adType, placement, callback) {
+AppodealPrime.canShowWithPlacement = function(adType, placement, callback) {
     exec(callback, null, "AppodealPlugin", "canShowWithPlacement", [adType, placement]);
 };
 
-Appodeal.setCustomBooleanRule = function(name, rule) {
+AppodealPrime.setCustomBooleanRule = function(name, rule) {
     exec(null, null, "AppodealPlugin", "setCustomBooleanRule", [name, rule]);
 };
 
-Appodeal.setCustomIntegerRule = function(name, rule) {
+AppodealPrime.setCustomIntegerRule = function(name, rule) {
     exec(null, null, "AppodealPlugin", "setCustomIntegerRule", [name, rule]);
 };
 
-Appodeal.setCustomDoubleRule = function(name, rule) {
+AppodealPrime.setCustomDoubleRule = function(name, rule) {
     exec(null, null, "AppodealPlugin", "setCustomDoubleRule", [name, rule]);
 };
 
-Appodeal.setCustomStringRule = function(name, rule) {
+AppodealPrime.setCustomStringRule = function(name, rule) {
     exec(null, null, "AppodealPlugin", "setCustomStringRule", [name, rule]);
 };
 
-Appodeal.getRewardParameters = function(callback) {
+AppodealPrime.getRewardParameters = function(callback) {
     exec(callback, null, "AppodealPlugin", "getRewardParameters", []);
 };
 
-Appodeal.getRewardParametersForPlacement = function(placement, callback) {
+AppodealPrime.getRewardParametersForPlacement = function(placement, callback) {
     exec(callback, null, "AppodealPlugin", "getRewardParametersForPlacement", [placement]);
 };
 
-Appodeal.setAge = function(age) {
+AppodealPrime.setAge = function(age) {
     exec(null, null, "AppodealPlugin", "setAge", [age]);
 };
 
-Appodeal.setGender = function(gender) {
+AppodealPrime.setGender = function(gender) {
     exec(null, null, "AppodealPlugin", "setGender", [gender]);
 };
 
-Appodeal.setUserId = function(userid){
+AppodealPrime.setUserId = function(userid){
     exec(null, null, "AppodealPlugin", "setUserId", [userid]);
 };
 
-Appodeal.trackInAppPurchase = function(amount, currency){
+AppodealPrime.trackInAppPurchase = function(amount, currency){
     exec(null, null, "AppodealPlugin", "trackInAppPurchase", [amount, currency]);
 };
 
-Appodeal.setInterstitialCallbacks = function(callback) {
+AppodealPrime.setInterstitialCallbacks = function(callback) {
     exec(callback, null, "AppodealPlugin", "setInterstitialCallbacks", [])
 };
 
-Appodeal.setNonSkippableVideoCallbacks = function(callbacks) {
+AppodealPrime.setNonSkippableVideoCallbacks = function(callbacks) {
     exec(callbacks, null, "AppodealPlugin", "setNonSkippableVideoCallbacks", []);
 };
 
-Appodeal.setRewardedVideoCallbacks = function(callbacks) {
+AppodealPrime.setRewardedVideoCallbacks = function(callbacks) {
     exec(callbacks, null, "AppodealPlugin", "setRewardedVideoCallbacks", []);
 };
 
-Appodeal.setBannerCallbacks = function(callbacks) {
+AppodealPrime.setBannerCallbacks = function(callbacks) {
     exec(callbacks, null, "AppodealPlugin", "setBannerCallbacks", []);
 };
