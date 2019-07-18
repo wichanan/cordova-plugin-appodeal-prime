@@ -20,6 +20,7 @@
 	<dependency id="cordova-plugin-cocoapod-support"/>
 
 	<platform name="android">
+        <preference name="ANDROID_APP_KEY" />
 	    <config-file parent="/*" target="res/xml/config.xml">
 			<feature name="AppodealPrime">
 				<param name="android-package" value="com.appodeal.AppodealPrime" />
@@ -34,8 +35,8 @@
 	    </config-file>
 	    <config-file parent="/manifest/application" target="AndroidManifest.xml">
 	    	<meta-data
-	            android:name="com.appodeal.ads.appodealprime"
-	            android:value="appodealprime" />
+	            android:name="com.appodeal.ads.appodealprime.APP_KEY"
+	            android:value="$ANDROID_APP_KEY" />
 
 			<activity android:name="com.appodeal.ads.InterstitialActivity"
 				android:configChanges="orientation|screenSize"
@@ -351,11 +352,15 @@
 	</platform>
 
 	<platform name="ios">
+        <preference name="IOS_APP_KEY" />
 		<config-file target="config.xml" parent="/*" >
 			<feature name="AppodealPrime">
 				<param name="ios-package" value="AppodealPrime" />
 			</feature>
 		</config-file>
+        <config-file target="*-Info.plist" parent="ApodealApplicationIdentifier">
+            <string>$IOS_APP_KEY</string>
+        </config-file>
 		<config-file target="*-Info.plist" parent="NSAppTransportSecurity">
 		  <dict>
 		      <key>NSAllowsArbitraryLoads</key>
