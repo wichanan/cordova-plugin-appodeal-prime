@@ -348,7 +348,16 @@
 	    <source-file src="libs/Android/yandex-metrica-3.5.3.jar" target-dir="app/src/main/libs" />
 	    <source-file src="libs/Android/yandex-mobileads-2.91.jar" target-dir="app/src/main/libs" />
 
-	    <source-file src="src/android/AppodealPlugin.java" target-dir="src/com/appodeal/appodealprime" />
+	    <!-- <source-file src="src/android/AppodealPlugin.java" target-dir="src/com/appodeal/appodealprime" /> -->
+        <source-file src="src/android/Actions.java" target-dir="src/com/appodeal/appodealprime" />
+        <source-file src="src/android/Action.java" target-dir="src/com/appodeal/appodealprime" />
+        <source-file src="src/android/Events.java" target-dir="src/com/appodeal/appodealprime" />
+        <source-file src="src/android/AppodealPrime.java" target-dir="src/com/appodeal/appodealprime" />
+        <source-file src="src/android/ads/AdBase.java" target-dir="src/com/appodeal/appodealprime/ads" />
+        <source-file src="src/android/ads/BannerAd.java" target-dir="src/com/appodeal/appodealprime/ads" />
+        <source-file src="src/android/ads/NativeAd.java" target-dir="src/com/appodeal/appodealprime/ads" />
+        <source-file src="src/android/ads/InterstitialAd.java" target-dir="src/com/appodeal/appodealprime/ads" />
+        <source-file src="src/android/ads/RewardVideo.java" target-dir="src/com/appodeal/appodealprime/ads" />
 	</platform>
 
 	<platform name="ios">
@@ -381,9 +390,9 @@
 		<config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
 		  <string>We are using the Photo features to serve ads on the app</string>
 		</config-file>
-		<header-file src="src/ios/AppodealPlugin.h"/>
-		<source-file src="src/ios/AppodealPlugin.m"/>
-		<!-- <header-file src="src/ios/AppodealPrime-Bridging-Header.h" /> -->
+        <!-- <header-file src="src/ios/AppodealPlugin.h"/>
+		<source-file src="src/ios/AppodealPlugin.m"/> -->
+		<header-file src="src/ios/AP-Bridging-Header.h" />
 
 		<framework src="AdSupport.framework"/>
 		<framework src="AudioToolbox.framework"/>
@@ -415,6 +424,15 @@
 		<framework src="libz.dylib"/>
 
 		<pod name="Appodeal" spec="2.5.7" />
+
+        <source-file src="src/ios/APBase.swift" />
+        <source-file src="src/ios/APBanner.swift" />
+        <source-file src="src/ios/APPlugin.swift" />
+        <source-file src="src/ios/APInterstitial.swift" />
+        <source-file src="src/ios/APRewardVideo.swift" />
+        <source-file src="src/ios/APConstants.swift" />
+        <source-file src="src/ios/APNative.swift" />
+        <source-file src="src/ios/APNativeBanner.swift" />
 
 	</platform>
 </plugin>
