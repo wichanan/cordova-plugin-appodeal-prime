@@ -8,7 +8,7 @@ var cordova = require('cordova');
  */
 function execute(method, args) {
     return new Promise((resolve, reject) => {
-        exec(resolve, reject, 'FBANFree', method, [args])
+        exec(resolve, reject, 'AppodealPrime', method, [args])
     });
 }
 
@@ -24,18 +24,8 @@ function getAdUnitId(adUnitId) {
     return adUnits[adUnitId]
 }
 
-function bannerConfig(placementID) {
+function adConfig(adType) {
     return {
-        placementID: placementID,
-        adSize: 1,
-        position: 'bottom',
-        id: getAdUnitId(placementID)
-    }
-}
-
-function adConfig(placementID) {
-    return {
-        placementID: placementID,
         id: getAdUnitId(placementID)
     }
 }
@@ -43,8 +33,7 @@ function adConfig(placementID) {
 function nativeConfig(data) {
     return {
         position: data.position,
-        placementID: data.placementID,
-        id: getAdUnitId(data.placementID)
+        id: getAdUnitId(data.adType)
     }
 }
 
@@ -74,179 +63,200 @@ AppodealPrime.Gender = {
 
 AppodealPrime.pluginVersion = '0.0.1';
 
-AppodealPrime.initialize = function(appKey, adType) {
-    exec(null, null, "AppodealPlugin", "setPluginVersion", [AppodealPrime.pluginVersion]);
-    exec(null, null, "AppodealPlugin", "initialize", [appKey, adType]);
+AppodealPrime.ready = function() {
+    execute('ready', {});
 };
+
+AppodealPrime.showBanner = function() {
+    execute('banner_show', adConfig('BANNER_BOTTOM'));
+};
+
+AppodealPrime.hideBanner = function() {
+    execute('banner_hide', adConfig('BANNER_BOTTOM'));
+}
+
+AppodealPrime.loadNative = function() {
+    execute('native_load', adConfig('NATIVE'));
+}
+
+AppodealPrime.showInterstitial = function() {
+    execute('interstitial_show', adConfig('INTERSTITIAL'));
+}
+
+AppodealPrime.showRewardVideo = function() {
+    execute('reward_video_show', adConfig('REWARD_VIDEO'));
+}
 
 AppodealPrime.show = function(adType, callback) {
     exec(callback, null, "AppodealPlugin", "show", [adType]);
 };
 
-AppodealPrime.showWithPlacement = function(adType, placement, callback) {
-    exec(callback, null, "AppodealPlugin", "showWithPlacement", [adType, placement]);
-};
 
-AppodealPrime.showBannerView = function(xAxis, yAxis, placement) {
-    exec(null, null, "AppodealPlugin", "showBannerView", [xAxis, yAxis, placement]);
-};
 
-AppodealPrime.isLoaded = function(adType, callback) {
-    exec(callback, null, "AppodealPlugin", "isLoaded", [adType]);
-};
+// AppodealPrime.showWithPlacement = function(adType, placement, callback) {
+//     exec(callback, null, "AppodealPlugin", "showWithPlacement", [adType, placement]);
+// };
 
-AppodealPrime.cache = function(adType) {
-    exec(null, null, "AppodealPlugin", "cache", [adType]);
-};
+// AppodealPrime.showBannerView = function(xAxis, yAxis, placement) {
+//     exec(null, null, "AppodealPlugin", "showBannerView", [xAxis, yAxis, placement]);
+// };
 
-AppodealPrime.hide = function(adType) {
-    exec(null, null, "AppodealPlugin", "hide", [adType]);
-};
+// AppodealPrime.isLoaded = function(adType, callback) {
+//     exec(callback, null, "AppodealPlugin", "isLoaded", [adType]);
+// };
 
-AppodealPrime.destroy = function(adType) {
-    exec(null, null, "AppodealPlugin", "destroy", [adType]);
-}
+// AppodealPrime.cache = function(adType) {
+//     exec(null, null, "AppodealPlugin", "cache", [adType]);
+// };
 
-AppodealPrime.setAutoCache = function(adType, autoCache) {
-    exec(null, null, "AppodealPlugin", "setAutoCache", [adType, autoCache]);
-};
+// AppodealPrime.hide = function(adType) {
+//     exec(null, null, "AppodealPlugin", "hide", [adType]);
+// };
 
-AppodealPrime.isPrecache = function(adType, callback) {
-    exec(callback, null, "AppodealPlugin", "isPrecache", [adType]);
-};
+// AppodealPrime.destroy = function(adType) {
+//     exec(null, null, "AppodealPlugin", "destroy", [adType]);
+// }
 
-AppodealPrime.setBannerBackground = function(value) {
-    exec(null, null, "AppodealPlugin", "setBannerBackground", [value]);
-};
+// AppodealPrime.setAutoCache = function(adType, autoCache) {
+//     exec(null, null, "AppodealPlugin", "setAutoCache", [adType, autoCache]);
+// };
 
-AppodealPrime.setBannerAnimation = function(value) {
-    exec(null, null, "AppodealPlugin", "setBannerAnimation", [value]);
-};
+// AppodealPrime.isPrecache = function(adType, callback) {
+//     exec(callback, null, "AppodealPlugin", "isPrecache", [adType]);
+// };
 
-AppodealPrime.setSmartBanners = function(value) {
-    exec(null, null, "AppodealPlugin", "setSmartBanners", [value]);
-};
+// AppodealPrime.setBannerBackground = function(value) {
+//     exec(null, null, "AppodealPlugin", "setBannerBackground", [value]);
+// };
 
-AppodealPrime.set728x90Banners = function(value) {
-    exec(null, null, "AppodealPlugin", "set728x90Banners", [value]);
-};
+// AppodealPrime.setBannerAnimation = function(value) {
+//     exec(null, null, "AppodealPlugin", "setBannerAnimation", [value]);
+// };
 
-AppodealPrime.setBannerOverLap = function(value) {
-    exec(null, null, "AppodealPlugin", "setBannerOverLap", [value]);
-};
+// AppodealPrime.setSmartBanners = function(value) {
+//     exec(null, null, "AppodealPlugin", "setSmartBanners", [value]);
+// };
 
-AppodealPrime.setTesting = function(testing) {
-    exec(null, null, "AppodealPlugin", "setTesting", [testing]);
-};
+// AppodealPrime.set728x90Banners = function(value) {
+//     exec(null, null, "AppodealPlugin", "set728x90Banners", [value]);
+// };
 
-AppodealPrime.setLogLevel = function(loglevel) {
-    exec(null, null, "AppodealPlugin", "setLogLevel", [loglevel]);
-};
+// AppodealPrime.setBannerOverLap = function(value) {
+//     exec(null, null, "AppodealPlugin", "setBannerOverLap", [value]);
+// };
 
-AppodealPrime.setChildDirectedTreatment = function(value) {
-    exec(null, null, "AppodealPlugin", "setChildDirectedTreatment", [value]);
-};
+// AppodealPrime.setTesting = function(testing) {
+//     exec(null, null, "AppodealPlugin", "setTesting", [testing]);
+// };
 
-AppodealPrime.setTriggerOnLoadedOnPrecache = function(set) {
-    exec(null, null, "AppodealPlugin", "setOnLoadedTriggerBoth", [set]);
-};
+// AppodealPrime.setLogLevel = function(loglevel) {
+//     exec(null, null, "AppodealPlugin", "setLogLevel", [loglevel]);
+// };
 
-AppodealPrime.disableNetwork = function(network, adType) {
-    exec(null, null, "AppodealPlugin", "disableNetwork", [network]);
-};
+// AppodealPrime.setChildDirectedTreatment = function(value) {
+//     exec(null, null, "AppodealPlugin", "setChildDirectedTreatment", [value]);
+// };
 
-AppodealPrime.disableNetworkType = function(network, adType) {
-    exec(null, null, "AppodealPlugin", "disableNetworkType", [network, adType]);
-};
+// AppodealPrime.setTriggerOnLoadedOnPrecache = function(set) {
+//     exec(null, null, "AppodealPlugin", "setOnLoadedTriggerBoth", [set]);
+// };
 
-AppodealPrime.disableLocationPermissionCheck = function() {
-    exec(null, null, "AppodealPlugin", "disableLocationPermissionCheck", []);
-};
+// AppodealPrime.disableNetwork = function(network, adType) {
+//     exec(null, null, "AppodealPlugin", "disableNetwork", [network]);
+// };
 
-AppodealPrime.disableWriteExternalStoragePermissionCheck = function() {
-    exec(null, null, "AppodealPlugin", "disableWriteExternalStoragePermissionCheck", []);
-};
+// AppodealPrime.disableNetworkType = function(network, adType) {
+//     exec(null, null, "AppodealPlugin", "disableNetworkType", [network, adType]);
+// };
 
-AppodealPrime.muteVideosIfCallsMuted = function(value) {
-    exec(null, null, "AppodealPlugin", "muteVideosIfCallsMuted", [value]);
-};
+// AppodealPrime.disableLocationPermissionCheck = function() {
+//     exec(null, null, "AppodealPlugin", "disableLocationPermissionCheck", []);
+// };
 
-AppodealPrime.showTestScreen = function(value) {
-    exec(null, null, "AppodealPlugin", "showTestScreen", []);
-};
+// AppodealPrime.disableWriteExternalStoragePermissionCheck = function() {
+//     exec(null, null, "AppodealPlugin", "disableWriteExternalStoragePermissionCheck", []);
+// };
 
-AppodealPrime.getVersion = function(callback) {
-    exec(callback, null, "AppodealPlugin", "getVersion", []);
-};
+// AppodealPrime.muteVideosIfCallsMuted = function(value) {
+//     exec(null, null, "AppodealPlugin", "muteVideosIfCallsMuted", [value]);
+// };
 
-AppodealPrime.getPluginVersion = function(){
-    return AppodealPrime.pluginVersion;
-};
+// AppodealPrime.showTestScreen = function(value) {
+//     exec(null, null, "AppodealPlugin", "showTestScreen", []);
+// };
 
-AppodealPrime.isInitialized = function(callback) {
-    exec(callback, null, "AppodealPlugin", "isInitalized", []);
-};
+// AppodealPrime.getVersion = function(callback) {
+//     exec(callback, null, "AppodealPlugin", "getVersion", []);
+// };
 
-AppodealPrime.canShow = function(adType, callback) {
-    exec(callback, null, "AppodealPlugin", "canShow", [adType]);
-};
+// AppodealPrime.getPluginVersion = function(){
+//     return AppodealPrime.pluginVersion;
+// };
 
-AppodealPrime.canShowWithPlacement = function(adType, placement, callback) {
-    exec(callback, null, "AppodealPlugin", "canShowWithPlacement", [adType, placement]);
-};
+// AppodealPrime.isInitialized = function(callback) {
+//     exec(callback, null, "AppodealPlugin", "isInitalized", []);
+// };
 
-AppodealPrime.setCustomBooleanRule = function(name, rule) {
-    exec(null, null, "AppodealPlugin", "setCustomBooleanRule", [name, rule]);
-};
+// AppodealPrime.canShow = function(adType, callback) {
+//     exec(callback, null, "AppodealPlugin", "canShow", [adType]);
+// };
 
-AppodealPrime.setCustomIntegerRule = function(name, rule) {
-    exec(null, null, "AppodealPlugin", "setCustomIntegerRule", [name, rule]);
-};
+// AppodealPrime.canShowWithPlacement = function(adType, placement, callback) {
+//     exec(callback, null, "AppodealPlugin", "canShowWithPlacement", [adType, placement]);
+// };
 
-AppodealPrime.setCustomDoubleRule = function(name, rule) {
-    exec(null, null, "AppodealPlugin", "setCustomDoubleRule", [name, rule]);
-};
+// AppodealPrime.setCustomBooleanRule = function(name, rule) {
+//     exec(null, null, "AppodealPlugin", "setCustomBooleanRule", [name, rule]);
+// };
 
-AppodealPrime.setCustomStringRule = function(name, rule) {
-    exec(null, null, "AppodealPlugin", "setCustomStringRule", [name, rule]);
-};
+// AppodealPrime.setCustomIntegerRule = function(name, rule) {
+//     exec(null, null, "AppodealPlugin", "setCustomIntegerRule", [name, rule]);
+// };
 
-AppodealPrime.getRewardParameters = function(callback) {
-    exec(callback, null, "AppodealPlugin", "getRewardParameters", []);
-};
+// AppodealPrime.setCustomDoubleRule = function(name, rule) {
+//     exec(null, null, "AppodealPlugin", "setCustomDoubleRule", [name, rule]);
+// };
 
-AppodealPrime.getRewardParametersForPlacement = function(placement, callback) {
-    exec(callback, null, "AppodealPlugin", "getRewardParametersForPlacement", [placement]);
-};
+// AppodealPrime.setCustomStringRule = function(name, rule) {
+//     exec(null, null, "AppodealPlugin", "setCustomStringRule", [name, rule]);
+// };
 
-AppodealPrime.setAge = function(age) {
-    exec(null, null, "AppodealPlugin", "setAge", [age]);
-};
+// AppodealPrime.getRewardParameters = function(callback) {
+//     exec(callback, null, "AppodealPlugin", "getRewardParameters", []);
+// };
 
-AppodealPrime.setGender = function(gender) {
-    exec(null, null, "AppodealPlugin", "setGender", [gender]);
-};
+// AppodealPrime.getRewardParametersForPlacement = function(placement, callback) {
+//     exec(callback, null, "AppodealPlugin", "getRewardParametersForPlacement", [placement]);
+// };
 
-AppodealPrime.setUserId = function(userid){
-    exec(null, null, "AppodealPlugin", "setUserId", [userid]);
-};
+// AppodealPrime.setAge = function(age) {
+//     exec(null, null, "AppodealPlugin", "setAge", [age]);
+// };
 
-AppodealPrime.trackInAppPurchase = function(amount, currency){
-    exec(null, null, "AppodealPlugin", "trackInAppPurchase", [amount, currency]);
-};
+// AppodealPrime.setGender = function(gender) {
+//     exec(null, null, "AppodealPlugin", "setGender", [gender]);
+// };
 
-AppodealPrime.setInterstitialCallbacks = function(callback) {
-    exec(callback, null, "AppodealPlugin", "setInterstitialCallbacks", [])
-};
+// AppodealPrime.setUserId = function(userid){
+//     exec(null, null, "AppodealPlugin", "setUserId", [userid]);
+// };
 
-AppodealPrime.setNonSkippableVideoCallbacks = function(callbacks) {
-    exec(callbacks, null, "AppodealPlugin", "setNonSkippableVideoCallbacks", []);
-};
+// AppodealPrime.trackInAppPurchase = function(amount, currency){
+//     exec(null, null, "AppodealPlugin", "trackInAppPurchase", [amount, currency]);
+// };
 
-AppodealPrime.setRewardedVideoCallbacks = function(callbacks) {
-    exec(callbacks, null, "AppodealPlugin", "setRewardedVideoCallbacks", []);
-};
+// AppodealPrime.setInterstitialCallbacks = function(callback) {
+//     exec(callback, null, "AppodealPlugin", "setInterstitialCallbacks", [])
+// };
 
-AppodealPrime.setBannerCallbacks = function(callbacks) {
-    exec(callbacks, null, "AppodealPlugin", "setBannerCallbacks", []);
-};
+// AppodealPrime.setNonSkippableVideoCallbacks = function(callbacks) {
+//     exec(callbacks, null, "AppodealPlugin", "setNonSkippableVideoCallbacks", []);
+// };
+
+// AppodealPrime.setRewardedVideoCallbacks = function(callbacks) {
+//     exec(callbacks, null, "AppodealPlugin", "setRewardedVideoCallbacks", []);
+// };
+
+// AppodealPrime.setBannerCallbacks = function(callbacks) {
+//     exec(callbacks, null, "AppodealPlugin", "setBannerCallbacks", []);
+// };

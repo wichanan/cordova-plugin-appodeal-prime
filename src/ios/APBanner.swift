@@ -8,40 +8,23 @@ class APBanner: APBase, AppodealBannerDelegate {
         super.init(id: id)
     }
     
-//    func prepareBanner() {
-//        if (self.adView == nil) {
-//            self.adView = FBAdView(placementID: self.placementID, adSize: self.adSize, rootViewController: plugin.viewController)
-//        }
-//        let size: CGSize = view.bounds.size
-//        let yOffset: CGFloat = size.height - 50
-//        self.adView?.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 50)
-//        self.adBannerToView(self.adView)
-//        self.adView?.delegate = self
-//    }
-    
     func hide() {
         Appodeal.hideBanner()
+        resizeWebView(50)
     }
     
     func showBanner() {
         Appodeal.showAd(.bannerBottom, rootViewController: self.plugin.viewController)
         Appodeal.setBannerDelegate(self)
+        resizeWebView(-50)
     }
-    
-//    func adViewDidLoad(_ adView: FBAdView) {
-//        if (self.adView != nil && self.adView!.isAdValid) {
-//            //            self.adBannerToView(adView)
-//        }
-//    }
-    
-    func adBannerToView(_ adView: UIView) {
-        plugin.webView.superview?.addSubview(adView)
-        
+
+    func resizeWebView(_ offset: CGFloat) {
         plugin.webView.frame = CGRect(
             x: plugin.webView.bounds.origin.x,
             y: plugin.webView.bounds.origin.y,
             width: plugin.webView.bounds.width,
-            height: plugin.webView.bounds.height - 50)
+            height: plugin.webView.bounds.height + offset)
     }
     
     func bannerDidLoadAdIsPrecache(_ precache: Bool){
