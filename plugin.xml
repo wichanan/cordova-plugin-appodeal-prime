@@ -427,7 +427,7 @@
 
         <source-file src="src/ios/APBase.swift" />
         <source-file src="src/ios/APBanner.swift" />
-        <source-file src="src/ios/APPlugin.swift" />
+        <source-file src="src/ios/AppodealPrime.swift" />
         <source-file src="src/ios/APInterstitial.swift" />
         <source-file src="src/ios/APRewardVideo.swift" />
         <source-file src="src/ios/APConstants.swift" />

@@ -1,15 +1,14 @@
 {
   "version": "0.0.1",
   "name": "cordova-appodeal-prime",
-  "cordova_name": "Cordova Plugin Appodeal Prime",
+  "description": "Cordova Appodeal Prime",
   "cordova": {
-    "id": "cordova-admob-plus",
+    "id": "cordova-plugin-appodeal-prime",
     "platforms": [
       "android",
       "ios"
     ]
   },
-  "description": "Cordova Appodeal Prime",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wichanan/cordova-plugin-appodeal-prime.git"
