@@ -1,24 +1,20 @@
 class APBase: NSObject {
     static var ads = Dictionary<Int, Any>()
-    static weak var plugin: FBANPlugin!
-
-    var placementID: String!
+    static weak var plugin: AppodealPrime!
     var id: Int!
 
-    var plugin: FBANPlugin {
-        return FBANBase.plugin
+    var plugin: AppodealPrime {
+        return APBase.plugin
     }
 
-    init(id: Int, placementID: String) {
+    init(id: Int) {
         super.init()
         
         self.id = id
-        self.placementID = placementID
-        FBANBase.ads[id] = self
+        APBase.ads[id] = self
     }
 
     deinit {
-        FBANBase.ads.removeValue(forKey: self.id)
-        self.placementID = nil
+        APBase.ads.removeValue(forKey: self.id)
     }
 }

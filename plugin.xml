@@ -379,16 +379,16 @@
 		  </dict>
 		</config-file>
 		<config-file target="*-Info.plist" parent="NSCalendarsUsageDescription">
-		  <string>We are using the Calendar features to serve ads on the app</string>
+		  <string>We are using the Calendar features to serve ads to the app</string>
 		</config-file>
 		<config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
-		  <string>We are using the Bluetooth features to serve ads on the app</string>
+		  <string>We are using the Bluetooth features to serve ads to the app</string>
 		</config-file>
 		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-		  <string>We are using the Location features to serve ads on the app</string>
+		  <string>We are using the Location features to serve ads to the app</string>
 		</config-file>
 		<config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
-		  <string>We are using the Photo features to serve ads on the app</string>
+		  <string>We are using the Photo features to serve ads to the app</string>
 		</config-file>
         <!-- <header-file src="src/ios/AppodealPlugin.h"/>
 		<source-file src="src/ios/AppodealPlugin.m"/> -->

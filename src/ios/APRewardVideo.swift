@@ -1,58 +1,54 @@
-class APRewardVideo: APBase {
-    var rewardedVideoAd: FBRewardedVideoAd!
+class APRewardVideo: APBase, APDRewardedVideoDelegate {
 
-    deinit {
-        rewardedVideoAd = nil
+    func show() {
+        Appodeal.showAd(.rewardedVideo, rootViewController: self.plugin.viewController)
+        Appodeal.setAutocache(false, types:.rewardedVideo)
+        
+        Appodeal.setRewardedVideoDelegate(self as? AppodealRewardedVideoDelegate)
     }
 
-    func load() {
-        self.rewardedVideoAd = FBRewardedVideoAd(placementID: placementID)
-        self.rewardedVideoAd!.delegate = self
-        self.rewardedVideoAd!.load()
-    }
-
-    func show () {
-        if (rewardedVideoAd != nil) {
-            rewardedVideoAd.show(fromRootViewController: plugin.viewController)
-        }
-    }
-
-    func rewardedVideoAdDidLoad(_ rewardedVideoAd: FBRewardedVideoAd) {
-        if (rewardedVideoAd.isAdValid) {
-            rewardedVideoAd.show(fromRootViewController: plugin.viewController)
-        }
-    }
-
-    func rewardedVideoAdDidClick(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoClick)
+    // Method called if rewarded video mediation failed
+    func rewardedVideoDidFailToLoadAd() {
+        NSLog("rewared video did fail to load ad")
     }
     
-    func rewardedVideoAdDidClose(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoClose)
+    // Method called if rewarded mediation was successful, but ready ad network can't show ad or
+    // ad presentation was too frequent according to your placement settings
+    //
+    // - Parameter error: Error object that indicates error reason
+    func rewardedVideoDidFailToPresentWithError(_ error: Error) {
+        print("rewared video did fail to present with error: " + error.localizedDescription)
     }
     
-    func rewardedVideoAdVideoComplete(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoComplete)
+    // Method called after rewarded video start displaying
+    func rewardedVideoDidPresent() {
+        NSLog("rewared video did present")
     }
     
-    func rewardedVideoAdWillClose(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoWillClose)
+    // Method called before rewarded video leaves screen
+    //
+    // - Parameter wasFullyWatched: boolean flag indicated that user watch video fully
+    func rewardedVideoWillDismissAndWasFullyWatched(_ wasFullyWatched: Bool) {
+        NSLog("rewared video will dismiss and fully watched")
     }
     
-    func rewardedVideoAdWillLogImpression(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoImpression)
+    //  Method called after fully watch of video
+    //
+    // - Warning: After call this method rewarded video can stay on screen and show postbanner
+    // - Parameters:
+    //   - rewardAmount: Amount of app curency tuned via Appodeal Dashboard
+    //   - rewardName: Name of app currency tuned via Appodeal Dashboard
+    func rewardedVideoDidFinish(_ rewardAmount: Float, name rewardName: String?) {
+        NSLog("rewared video did finish")
     }
     
-    func rewardedVideoAd(_ rewardedVideoAd: FBRewardedVideoAd, didFailWithError error: Error) {
-        print("Error showing interstitial ad with: " + error.localizedDescription)
-        plugin.emit(eventType: FBANEvents.rewardVideoLoadFail, data: error)
+    // Method is called when rewarded video is clicked
+    func rewardedVideoDidClick() {
+        NSLog("rewared video did click")
     }
-
-    func rewardedVideoAdServerRewardDidFail(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoServerFail)
-    }
-
-    func rewardedVideoAdServerRewardDidSucceed(_ rewardedVideoAd: FBRewardedVideoAd) {
-        plugin.emit(eventType: FBANEvents.rewardVideoServerSuccess)
+    
+    // Method called when rewardedVideo did expire and can not be shown
+    func rewardedVideoDidExpired(){
+        NSLog("rewared video did expire")
     }
 }
