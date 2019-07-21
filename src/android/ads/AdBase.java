@@ -13,14 +13,12 @@ public abstract class AdBase {
     protected static AppodealPrime plugin;
 
     final int id;
-    String placementID;
 
     private static SparseArray<AdBase> ads = new SparseArray<AdBase>();
 
 
-    AdBase(int id, String placementID) {
+    AdBase(int id) {
         this.id = id;
-        this.placementID = placementID;
 
         ads.put(id, this);
     }

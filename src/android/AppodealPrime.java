@@ -30,9 +30,9 @@ public class AppodealPrime extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        AudienceNetworkAds.initialize(cordova.getActivity());
+
+        Appodeal.initialize(this, "YOUR_APPODEAL_APP_KEY", adTypes, true);
         AdBase.initialize(this);
-        AdSettings.addTestDevice("ea9f55ac-cbc1-40d7-8cd0-4adddee3331f");
     }
 
     @Override
@@ -66,18 +66,10 @@ public class AppodealPrime extends CordovaPlugin {
             return FBNativeAd.executeNativeShowAction(action, callbackContext);
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
             return FBNativeAd.executeNativeHideAction(action, callbackContext);
-        }else if (Actions.NATIVE_HIDE_ALL.equals(actionKey)) {
-            try {
-                action.opts.put("id", 9999);
-                return FBNativeAd.executeNativeHideAllAction(action, callbackContext);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
-        } else if (Actions.INTERSTITIAL_LOAD.equals(actionKey)) {
-            return FBInterstitialAd.executeInterstitialLoadAction(action, callbackContext);
+        } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
+            return FBInterstitialAd.executeInterstitialShowAction(action, callbackContext);
         }
 
         return false;
