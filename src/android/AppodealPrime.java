@@ -31,7 +31,7 @@ public class AppodealPrime extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
-        Appodeal.initialize(this, "YOUR_APPODEAL_APP_KEY", adTypes, true);
+        Appodeal.initialize(this, getApiKey, adTypes, true);
         AdBase.initialize(this);
     }
 
@@ -102,5 +102,16 @@ public class AppodealPrime extends CordovaPlugin {
         } else {
             readyCallbackContext.sendPluginResult(result);
         }
+    }
+
+    private String getApiKey() {
+        try {
+            ApplicationInfo ai = cordova.getActivity().getApplicationContext().getPackageManager().getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            return bundle.getString("com.appodeal.ads.appodealprime.APP_KEY");
+        } catch (Exception e) {
+            Log.e(TAG, "Forget to configure <meta-data android:name=\"com.appodeal.ads.appodealprime.APP_KEY\" android:value=\"XXX\"/> in your AndroidManifest.xml file.");
+        }
+        return '';
     }
 }

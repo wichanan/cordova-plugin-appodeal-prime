@@ -11,14 +11,18 @@ class AppodealPrime: CDVPlugin {
         isTestMode = false
         APBase.plugin = self
         let apiKey = getAPIKey()
-        Appodeal.setTestingEnabled(true)
-        
+        setTestEnv()
         Appodeal.initialize(withApiKey: apiKey, types: [AppodealAdType.banner, AppodealAdType.interstitial, AppodealAdType.nativeAd, AppodealAdType.rewardedVideo], hasConsent: true)
     }
     
     func getAPIKey() -> String {
-        let api_key = commandDelegate.settings["IOS_APP_KEY".lowercased()] as? String
+        let api_key = Bundle.main.object(forInfoDictionaryKey: "ApodealApplicationIdentifier") as? String
         return api_key!
+    }
+    
+    func setTestEnv() {
+        Appodeal.setTestingEnabled(true)
+        Appodeal.setLogLevel(.verbose)
     }
     
     @objc(ready:)
