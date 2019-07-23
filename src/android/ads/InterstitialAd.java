@@ -1,4 +1,4 @@
-package com.appodeal.ads;
+package com.appodealprime.ads;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.appodeal;
+package com.appodealprime;
 
 public final class Events {
     public static final String BANNER_CLICK = "appodeal.banner.click";

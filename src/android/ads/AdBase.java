@@ -1,4 +1,4 @@
-package com.appodeal.ads;
+package com.appodealprime.ads;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -6,7 +6,7 @@ import android.util.SparseArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.appodeal.AppodealPrime;
+import com.appodealprime.AppodealPrime;
 
 
 public abstract class AdBase {

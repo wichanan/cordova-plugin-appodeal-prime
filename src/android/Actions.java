@@ -1,4 +1,4 @@
-package com.appodeal;
+package com.appodealprime;
 
 final class Actions {
     static final String BANNER_HIDE = "banner_hide";

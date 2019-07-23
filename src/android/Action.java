@@ -1,6 +1,6 @@
-package com.appodeal;
+package com.appodealprime;
 
-import com.appodeal.ads.AdBase;
+import com.appodealprime.ads.AdBase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,9 +22,5 @@ public class Action {
 
     public AdBase getAd() {
         return AdBase.getAd(optId());
-    }
-
-    public String getPlacementID() {
-        return this.opts.optString("placementID");
     }
 }
