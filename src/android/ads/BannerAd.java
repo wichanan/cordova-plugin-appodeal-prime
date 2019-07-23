@@ -11,6 +11,8 @@ import org.apache.cordova.PluginResult;
 
 import java.util.ArrayList;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.BannerCallbacks;
 import com.appodealprime.Action;
 import com.appodealprime.Events;
 
@@ -32,7 +34,7 @@ public class BannerAd extends AdBase {
                             action.optId()
                     );
                 }
-//                bannerAd.show();
+                bannerAd.show();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -41,85 +43,59 @@ public class BannerAd extends AdBase {
         return true;
     }
 
-//    public static boolean executeHideAction(Action action, CallbackContext callbackContext) {
-//        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.d(TAG, "hide action triggered");
-//                BannerAd bannerAd = (BannerAd) action.getAd();
-//                if (bannerAd != null) {
-//                    bannerAd.hide(true);
-//                }
-//
-//                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
-//                callbackContext.sendPluginResult(result);
-//            }
-//        });
-//
-//        return true;
-//    }
-//
-//    public void hide(boolean withParam) {
-//        if (adView != null) {
-//            adView.destroy();
-//            adView.removeAllViews();
-//            View view = plugin.webView.getView();
-//            if (view.getParent() != null) {
-//                ((ViewGroup)view.getParent()).removeView(view);
-//            }
-//            FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.MATCH_PARENT,
-//                    parentView.getHeight()
-//            );
-//            if (withParam) {
-//                view.setLayoutParams(webViewParams);
-//                adView = null;
-//            }
-//            parentView.addView(view);
-//            parentView.bringToFront();
-//            parentView.requestLayout();
-//            parentView.requestFocus();
-//            bringNativeAdsToFront();
-//        }
-//    }
-//
-//    public void show() {
-//        if (adView == null) {
-//            adView = new AdView(plugin.cordova.getActivity(), placementID, AdSize.BANNER_HEIGHT_50);
-//            addBannerView(adView);
-//        } else {
-//            Log.d(TAG, "show log");
-//            hide(false);
-//            adView = new AdView(plugin.cordova.getActivity(), placementID, AdSize.BANNER_HEIGHT_50);
-//            addBannerView(adView);
-//        }
-//        bringNativeAdsToFront();
-//
-//        adView.loadAd();
-//
-//        adView.setAdListener(new AdListener() {
-//            @Override
-//            public void onError(Ad ad, AdError adError) {
-//                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
-//                plugin.emit(Events.BANNER_LOAD_FAIL);
-//            }
-//
-//            @Override
-//            public void onAdLoaded(Ad ad) {
-//                plugin.emit(Events.BANNER_LOAD);
-//            }
-//
-//            @Override
-//            public void onAdClicked(Ad ad) {
-//                plugin.emit(Events.BANNER_CLICK);
-//            }
-//
-//            @Override
-//            public void onLoggingImpression(Ad ad) {
-//                plugin.emit(Events.BANNER_IMPRESSION);
-//            }
-//        });
-//    }
+    public static boolean executeHideAction(Action action, CallbackContext callbackContext) {
+        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "hide action triggered");
+                BannerAd bannerAd = (BannerAd) action.getAd();
+                if (bannerAd != null) {
+                    bannerAd.hide(true);
+                }
+
+                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(result);
+            }
+        });
+
+        return true;
+    }
+
+    public void hide(boolean withParam) {
+        Appodeal.hide(plugin.cordova.getActivity(), Appodeal.BANNER_BOTTOM);
+    }
+
+    public void show() {
+        Appodeal.show(plugin.cordova.getActivity(), Appodeal.BANNER_BOTTOM);
+
+        Appodeal.setBannerCallbacks(new BannerCallbacks() {
+            @Override
+            public void onBannerLoaded(int i, boolean b) {
+                plugin.emit(Events.BANNER_LOAD);
+            }
+
+            @Override
+            public void onBannerFailedToLoad() {
+                Log.d(TAG, "Error loading banner");
+                plugin.emit(Events.BANNER_LOAD_FAIL);
+            }
+
+            @Override
+            public void onBannerShown() {
+                Log.d(TAG, "Banner shown");
+            }
+
+            @Override
+            public void onBannerClicked() {
+                plugin.emit(Events.BANNER_CLICK);
+            }
+
+            @Override
+            public void onBannerExpired() {
+                Log.d(TAG, "Banner Expired");
+            }
+        });
+    }
 //
 //    private void addBannerView(AdView adView) {
 //        View view = plugin.webView.getView();
