@@ -27,7 +27,7 @@
     "phonegap",
     "npm",
     "ads",
-	  "monetisation",
+    "monetisation",
     "ecosystem:cordova",
     "cordova-android",
     "cordova-appodeal-prime"
@@ -36,5 +36,16 @@
     "cordova": "^9.0.0"
   },
   "author": "Wichanan Thian",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wichanan/cordova-plugin-appodeal-prime/issues"
+  },
+  "homepage": "https://github.com/wichanan/cordova-plugin-appodeal-prime#readme",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
