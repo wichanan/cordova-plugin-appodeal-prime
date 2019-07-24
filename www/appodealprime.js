@@ -37,30 +37,6 @@ function nativeConfig(data) {
     }
 }
 
-AppodealPrime.INTERSTITIAL = 3;
-AppodealPrime.BANNER = 4;
-AppodealPrime.BANNER_BOTTOM = 8;
-AppodealPrime.BANNER_TOP = 16;
-AppodealPrime.REWARDED_VIDEO = 128;
-AppodealPrime.NON_SKIPPABLE_VIDEO = 256;
-
-AppodealPrime.BANNER_X_SMART = 0;
-AppodealPrime.BANNER_X_CENTER = 1;
-AppodealPrime.BANNER_X_LEFT = 2;
-AppodealPrime.BANNER_X_RIGHT = 3;
-
-AppodealPrime.LogLevel = {
-    NONE: 0,
-    DEBUG: 1,
-    VERBOSE: 2
-};
-
-AppodealPrime.Gender = {
-    OTHER: 0,
-    MALE: 1,
-    FEMALE: 2
-};
-
 AppodealPrime.pluginVersion = '0.0.1';
 
 AppodealPrime.ready = function() {
@@ -79,6 +55,10 @@ AppodealPrime.loadNative = function() {
     execute('native_load', adConfig('NATIVE'));
 }
 
+AppodealPrime.showNative = function(data) {
+    execute('native_show', nativeConfig(data));
+}
+
 AppodealPrime.showInterstitial = function() {
     execute('interstitial_show', adConfig('INTERSTITIAL'));
 }
@@ -87,9 +67,9 @@ AppodealPrime.showRewardVideo = function() {
     execute('reward_video_show', adConfig('REWARD_VIDEO'));
 }
 
-AppodealPrime.show = function(adType, callback) {
-    exec(callback, null, "AppodealPlugin", "show", [adType]);
-};
+// AppodealPrime.show = function(adType, callback) {
+//     exec(callback, null, "AppodealPlugin", "show", [adType]);
+// };
 
 
 
