@@ -26,14 +26,14 @@ function getAdUnitId(adUnitId) {
 
 function adConfig(adType) {
     return {
-        id: getAdUnitId(placementID)
+        id: getAdUnitId(adType)
     }
 }
 
 function nativeConfig(data) {
     return {
         position: data.position,
-        id: getAdUnitId(data.adType)
+        id: getAdUnitId('NATIVE')
     }
 }
 
