@@ -10,6 +10,7 @@ class AppodealPrime: CDVPlugin {
         
         isTestMode = false
         APBase.plugin = self
+        Appodeal.disableNetwork("admob")
         let apiKey = getAPIKey()
         setTestEnv()
         Appodeal.initialize(withApiKey: apiKey, types: [AppodealAdType.banner, AppodealAdType.interstitial, AppodealAdType.nativeAd, AppodealAdType.rewardedVideo], hasConsent: true)
@@ -28,11 +29,9 @@ class AppodealPrime: CDVPlugin {
     @objc(ready:)
     func ready(command: CDVInvokedUrlCommand) {
         readyCallbackId = command.callbackId
-        
         self.emit(eventType: APEvents.ready, data: [
             "platform": "ios",
-            "sdkVersion": Appodeal.getVersion(),
-            "isRunningInTestLab": false])
+            "sdkVersion": Appodeal.getVersion()])
     }
     
     @objc(banner_show:)
@@ -117,21 +116,21 @@ class AppodealPrime: CDVPlugin {
         self.commandDelegate!.send(result, callbackId: command.callbackId)
     }
     
-//    @objc(native_hide:)
-//    func native_hide(command: CDVInvokedUrlCommand) {
-//        guard let opts = command.argument(at: 0) as? NSDictionary,
-//            let id = opts.value(forKey: "id") as? Int,
-//            let native = FBANBase.ads[id] as? FBANNative?
-//            else {
-//                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
-//                self.commandDelegate!.send(result, callbackId: command.callbackId)
-//                return
-//        }
-//        native!.hide()
-//
-//        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
-//        self.commandDelegate!.send(result, callbackId: command.callbackId)
-//    }
+    @objc(native_hide:)
+    func native_hide(command: CDVInvokedUrlCommand) {
+        guard let opts = command.argument(at: 0) as? NSDictionary,
+            let id = opts.value(forKey: "id") as? Int,
+            let native = APBase.ads[id] as? APNative?
+            else {
+                let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
+                self.commandDelegate!.send(result, callbackId: command.callbackId)
+                return
+        }
+        native!.hide()
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
+        self.commandDelegate!.send(result, callbackId: command.callbackId)
+    }
     
     @objc(interstitial_show:)
     func interstitial_show(command: CDVInvokedUrlCommand) {

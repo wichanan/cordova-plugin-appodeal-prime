@@ -1,46 +1,58 @@
 class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegate{
     var adQueue: APDNativeAdQueue!
+    var nativeArray: [APDNativeAd] = []
+    var nativeAdView: UIView!
+    var nativeAd: APDNativeAd!
 
     var view: UIView {
         return self.plugin.viewController.view
     }
-
-    init(id: Int) {
-        super.init(id: id)
-        self.position = position
+    
+    deinit {
+        nativeAdView = nil
+        nativeAd = nil
     }
 
     func load () {
+        adQueue = APDNativeAdQueue()
         adQueue.settings.type = .auto
         adQueue.settings.autocacheMask = [.media, .icon]
         adQueue.delegate = self
         adQueue.loadAd()
     }
-//
+
     func show(_ position: NSDictionary) {
-        //
+        if nativeArray.count > 0 {
+            nativeAd = nativeArray.first
+            nativeAd.delegate = self
+            nativeAdView = UIView()
+            do {
+                let adView = try nativeAd.getViewForPlacement("default", withRootViewController: plugin.viewController)
+                
+                let size: CGSize = view.bounds.size
+                let yOffset: CGFloat = position.value(forKey: "top") as! CGFloat
+                self.nativeAdView.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 420)
+                
+                adView.frame = nativeAdView.bounds
+                nativeAdView.addSubview(adView)
+                view.addSubview(self.nativeAdView)
+            } catch {
+                print("error")
+            }
+        }
     }
-//
-//    func hide() {
-//        if (self.nativeAdView?.superview != nil) {
-//            self.nativeAd.delegate = nil
-//            self.nativeAdView.removeFromSuperview()
-//        }
-//    }
-
-
-//    func showNativeAd() {
-//        if (self.nativeAd != nil && self.nativeAd!.isAdValid) {
-//            self.nativeAdView = FBNativeAdView(nativeAd: self.nativeAd!, with: self.adViewType)
-//
-//            view.addSubview(self.nativeAdView)
-//
-//            let size: CGSize = plugin.viewController.view.bounds.size
-//            let yOffset: CGFloat = self.position?.value(forKey: "top") as! CGFloat
-//            self.nativeAdView.frame = CGRect(x: 0, y: yOffset, width: size.width, height: 420)
-//        }
-//    }
-
+    
+    func hide() {
+        if (self.nativeAdView?.superview != nil) {
+            self.nativeAd.delegate = nil
+            self.nativeAd = nil
+            self.nativeAdView.removeFromSuperview()
+            self.nativeAdView = nil
+            self.nativeArray = []
+            self.adQueue = nil
+            load()
+        }
+    }
         
     func nativeAdWillLogImpression(_ nativeAd: APDNativeAd) {
         NSLog("native will log impression")
@@ -51,11 +63,15 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     }
     
     func adQueue(_ adQueue: APDNativeAdQueue, failedWithError error: Error) {
-        print("ad queue failed with error " + error.localizedDescription)
+        print("adqueue failed with error " + error.localizedDescription)
     }
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
         NSLog("adqueue is available")
-        dump(adQueue)
+        if nativeArray.count > 0 {
+            return
+        } else {
+            nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 1))
+        }
     }
 }

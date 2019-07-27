@@ -8,16 +8,38 @@ var cordova = require('cordova');
  */
 function execute(method, args) {
     return new Promise((resolve, reject) => {
-        exec(resolve, reject, 'AppodealPrime', method, [args])
+        exec(function(event) {
+            resolve(event);
+        }, function(err) {
+            reject(err);
+        }, 'AppodealPrime', method, [args]);
     });
 }
+
+function fireDocumentEvent(eventName, data) {
+    if (data === void 0) { data = null; }
+    var event = new CustomEvent(eventName, { detail: data });
+    document.dispatchEvent(event);
+}
+
+function ready() {
+    exec(function(event) {
+        fireDocumentEvent(event.type, event.data);
+    }, function(err) {
+        console.log('ready error', err)
+    }, 'AppodealPrime', 'ready');
+}
+
+document.addEventListener('deviceready', function () {
+    ready();
+}, false);
 
 var nextId = 100
 var adUnits = {}
 
 function getAdUnitId(adUnitId) {
     if (adUnits[adUnitId]) {
-      return adUnits[adUnitId]
+        return adUnits[adUnitId]
     }
     adUnits[adUnitId] = nextId
     nextId += 1
@@ -26,43 +48,54 @@ function getAdUnitId(adUnitId) {
 
 function adConfig(adType) {
     return {
-        id: getAdUnitId(placementID)
+        id: getAdUnitId(adType)
     }
 }
 
 function nativeConfig(data) {
     return {
         position: data.position,
-        id: getAdUnitId(data.adType)
+        id: getAdUnitId('NATIVE')
     }
 }
 
 AppodealPrime.pluginVersion = '0.0.1';
 
 AppodealPrime.ready = function() {
-    execute('ready', {});
+    return new Promise((resolve, reject) => {
+        exec(function(event) {
+            fireDocumentEvent(event.type, event.data);
+            resolve(event.data);
+        }, function(err) {
+            reject(err);
+        }, 'AppodealPrime', 'ready');
+    });
 };
 
 AppodealPrime.showBanner = function() {
-    execute('banner_show', adConfig('BANNER_BOTTOM'));
+    return execute('banner_show', adConfig('BANNER_BOTTOM'));
 };
 
 AppodealPrime.hideBanner = function() {
-    execute('banner_hide', adConfig('BANNER_BOTTOM'));
+    return execute('banner_hide', adConfig('BANNER_BOTTOM'));
 }
 
 AppodealPrime.loadNative = function() {
-    execute('native_load', adConfig('NATIVE'));
+    return execute('native_load', adConfig('NATIVE'));
 }
 
 AppodealPrime.showNative = function(data) {
-    execute('native_show', nativeConfig(data));
+    return execute('native_show', nativeConfig(data));
+}
+
+AppodealPrime.hideNative = function() {
+    return execute('native_hide', adConfig('NATIVE'));
 }
 
 AppodealPrime.showInterstitial = function() {
-    execute('interstitial_show', adConfig('INTERSTITIAL'));
+    return execute('interstitial_show', adConfig('INTERSTITIAL'));
 }
 
 AppodealPrime.showRewardVideo = function() {
-    execute('reward_video_show', adConfig('REWARD_VIDEO'));
+    return execute('reward_video_show', adConfig('REWARD_VIDEO'));
 }
