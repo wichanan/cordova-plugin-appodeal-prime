@@ -22,7 +22,7 @@ class AppodealPrime: CDVPlugin {
     
     func setTestEnv() {
         Appodeal.setTestingEnabled(true)
-        Appodeal.setLogLevel(.verbose)
+        Appodeal.setLogLevel(.debug)
     }
     
     @objc(ready:)
@@ -76,7 +76,6 @@ class AppodealPrime: CDVPlugin {
     func native_load(command: CDVInvokedUrlCommand) {
         guard let opts = command.argument(at: 0) as? NSDictionary,
             let id = opts.value(forKey: "id") as? Int,
-            let position = opts.value(forKey: "position") as? NSDictionary,
             var native = APBase.ads[id] as? APNative?
             else {
                 let result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: false)
@@ -85,7 +84,7 @@ class AppodealPrime: CDVPlugin {
         }
 
         if native == nil {
-            native = APNative(id: id, position: position)
+            native = APNative(id: id)
         }
 
         native!.load()
@@ -112,7 +111,7 @@ class AppodealPrime: CDVPlugin {
             return
         }
 
-//        native!.show()
+        native!.show(position)
 
         let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         self.commandDelegate!.send(result, callbackId: command.callbackId)

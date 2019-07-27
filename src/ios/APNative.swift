@@ -5,8 +5,9 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
         return self.plugin.viewController.view
     }
 
-    init(id: Int, position: NSDictionary) {
+    init(id: Int) {
         super.init(id: id)
+        self.position = position
     }
 
     func load () {
@@ -16,13 +17,9 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
         adQueue.loadAd()
     }
 //
-//    func show() {
-//        if (self.nativeAdView == nil) {
-//            self.nativeAd.delegate = self
-//            showNativeAd()
-//        }
-//
-//    }
+    func show(_ position: NSDictionary) {
+        //
+    }
 //
 //    func hide() {
 //        if (self.nativeAdView?.superview != nil) {
