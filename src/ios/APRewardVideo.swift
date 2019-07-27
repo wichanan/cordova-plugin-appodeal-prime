@@ -1,10 +1,9 @@
-class APRewardVideo: APBase, APDRewardedVideoDelegate {
+class APRewardVideo: APBase, AppodealRewardedVideoDelegate {
 
     func show() {
         Appodeal.showAd(.rewardedVideo, rootViewController: self.plugin.viewController)
         Appodeal.setAutocache(false, types:.rewardedVideo)
-        
-        Appodeal.setRewardedVideoDelegate(self as? AppodealRewardedVideoDelegate)
+        Appodeal.setRewardedVideoDelegate(self)
     }
 
     // Method called if rewarded video mediation failed
