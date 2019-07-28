@@ -27,11 +27,11 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
     
     // Method called after interstitial leave screeen
     func interstitialDidDismiss() {
-        plugin.webView.frame = CGRect(
-            x: plugin.webView.bounds.origin.x,
-            y: plugin.webView.bounds.origin.y,
-            width: plugin.webView.bounds.width,
-            height: plugin.webView.bounds.height - 50)
+        view.frame = CGRect(
+            x: view.bounds.origin.x,
+            y: view.bounds.origin.y,
+            width: view.bounds.width,
+            height: view.bounds.height - 50)
         NSLog("interstitial did dismiss")
     }
     
