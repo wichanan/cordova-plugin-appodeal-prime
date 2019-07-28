@@ -22,18 +22,6 @@ function fireDocumentEvent(eventName, data) {
     document.dispatchEvent(event);
 }
 
-function ready() {
-    exec(function(event) {
-        fireDocumentEvent(event.type, event.data);
-    }, function(err) {
-        console.log('ready error', err)
-    }, 'AppodealPrime', 'ready');
-}
-
-document.addEventListener('deviceready', function () {
-    ready();
-}, false);
-
 var nextId = 100
 var adUnits = {}
 
