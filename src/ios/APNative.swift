@@ -14,6 +14,10 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     }
 
     func load () {
+        if (adQueue != nil) {
+            self.nativeArray = []
+            self.adQueue = nil
+        }
         adQueue = APDNativeAdQueue()
         adQueue.settings.type = .auto
         adQueue.settings.autocacheMask = [.media, .icon]
@@ -48,9 +52,6 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
             self.nativeAd = nil
             self.nativeAdView.removeFromSuperview()
             self.nativeAdView = nil
-            self.nativeArray = []
-            self.adQueue = nil
-            load()
         }
     }
         

@@ -12,7 +12,7 @@ class AppodealPrime: CDVPlugin {
         APBase.plugin = self
         Appodeal.disableNetwork("admob")
         let apiKey = getAPIKey()
-        setTestEnv()
+//        setTestEnv()
         Appodeal.initialize(withApiKey: apiKey, types: [AppodealAdType.banner, AppodealAdType.interstitial, AppodealAdType.nativeAd, AppodealAdType.rewardedVideo], hasConsent: true)
     }
     
@@ -23,7 +23,7 @@ class AppodealPrime: CDVPlugin {
     
     func setTestEnv() {
         Appodeal.setTestingEnabled(true)
-        Appodeal.setLogLevel(.debug)
+        Appodeal.setLogLevel(.verbose)
     }
     
     @objc(ready:)

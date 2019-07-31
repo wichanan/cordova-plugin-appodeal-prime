@@ -1,9 +1,12 @@
 class APRewardVideo: APBase, AppodealRewardedVideoDelegate {
-
+    var originalHeight: CGFloat!
     func show() {
         Appodeal.showAd(.rewardedVideo, rootViewController: self.plugin.viewController)
         Appodeal.setAutocache(false, types:.rewardedVideo)
         Appodeal.setRewardedVideoDelegate(self)
+        if (originalHeight == nil) {
+            originalHeight = plugin.webView.frame.height
+        }
     }
 
     // Method called if rewarded video mediation failed
@@ -28,6 +31,11 @@ class APRewardVideo: APBase, AppodealRewardedVideoDelegate {
     //
     // - Parameter wasFullyWatched: boolean flag indicated that user watch video fully
     func rewardedVideoWillDismissAndWasFullyWatched(_ wasFullyWatched: Bool) {
+        plugin.webView.frame = CGRect(
+            x: plugin.webView.bounds.origin.x,
+            y: plugin.webView.bounds.origin.y,
+            width: plugin.webView.bounds.width,
+            height: originalHeight)
         NSLog("rewared video will dismiss and fully watched")
     }
     
