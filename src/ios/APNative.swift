@@ -14,19 +14,11 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     }
 
     func load () {
-        if (adQueue == nil) {
-            nativeArray = []
-            adQueue = APDNativeAdQueue()
-            adQueue.settings.type = .auto
-            adQueue.settings.autocacheMask = [.media, .icon]
-            adQueue.delegate = self
-            adQueue.loadAd()
-        } else {
-            if (!adQueue.containsSuitableAdsForCurrentPlacement) {
-                nativeArray = []
-                adQueue.loadAd()
-            }
-        }
+        adQueue = APDNativeAdQueue()
+        adQueue.settings.type = .auto
+        adQueue.settings.autocacheMask = [.media, .icon]
+        adQueue.delegate = self
+        adQueue.loadAd()
     }
 
     func show(_ position: NSDictionary) {
@@ -57,7 +49,6 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
             self.nativeAdView.removeFromSuperview()
             self.nativeAdView = nil
             self.adQueue = nil
-            self.nativeArray = []
         }
     }
         
@@ -75,10 +66,7 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
         NSLog("adqueue is available")
-        if nativeArray.count > 0 {
-            return
-        } else {
-            nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 1))
-        }
+        nativeArray = []
+        nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 1))
     }
 }
