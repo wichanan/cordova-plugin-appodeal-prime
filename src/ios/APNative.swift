@@ -22,6 +22,7 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
             adQueue.loadAd()
         } else {
             if (!adQueue.containsSuitableAdsForCurrentPlacement) {
+                nativeArray = []
                 adQueue.loadAd()
             }
         }
