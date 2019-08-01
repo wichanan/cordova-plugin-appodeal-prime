@@ -13,14 +13,18 @@ import java.util.ArrayList;
 
 import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.BannerCallbacks;
+import com.appodeal.ads.BannerView;
 import com.appodealprime.Action;
 import com.appodealprime.Events;
 
 public class BannerAd extends AdBase {
     private static final String TAG = "AppodealPrime::BannerAD";
+    private ViewGroup parentView;
+    private BannerView bannerView;
 
     BannerAd(int id) {
         super(id);
+
     }
 
     public static boolean executeShowAction(Action action, CallbackContext callbackContext) {
@@ -66,7 +70,9 @@ public class BannerAd extends AdBase {
     }
 
     public void show() {
+//        bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
         Appodeal.show(plugin.cordova.getActivity(), Appodeal.BANNER_BOTTOM);
+        adjustViewHeight();
 
         Appodeal.setBannerCallbacks(new BannerCallbacks() {
             @Override
@@ -96,49 +102,24 @@ public class BannerAd extends AdBase {
             }
         });
     }
-//
-//    private void addBannerView(AdView adView) {
-//        View view = plugin.webView.getView();
-//        ViewGroup wvParentView = (ViewGroup) view.getParent();
-//        if (parentView == null) {
-//            parentView = new FrameLayout(plugin.webView.getContext());
-//        }
-//        float dip = 50f;
-//        float px = AdBase.pxFromDp(plugin.webView.getContext(), dip);
-//        int adPosition = wvParentView.getHeight() - (int)Math.floor(px);
-//
-//        if (wvParentView != null && wvParentView != parentView) {
-//            wvParentView.removeView(view);
-//            parentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//
-//            parentView.addView(view);
-//            wvParentView.addView(parentView);
-//        }
-//        view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, adPosition));
-//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//        );
-//        params.setMargins(0, adPosition, 0, 0);
-//        adView.setLayoutParams(params);
-//        parentView.addView(adView);
-//
-//        parentView.bringToFront();
-//        parentView.requestLayout();
-//        parentView.requestFocus();
-//    }
-//
-//    private void bringNativeAdsToFront() {
-//        int count = parentView.getChildCount();
-//        ArrayList<View> views = new ArrayList<View>();
-//        for (int i = 0; i<count; i++) {
-//            View v = parentView.getChildAt(i);
-//            if (v instanceof NativeAdLayout) {
-//                views.add(v);
-//            }
-//        }
-//
-//        for(int i = 0; i < views.size(); i++) {
-//            views.get(i).bringToFront();
-//        }
-//    }
+    
+    private void adjustViewHeight() {
+        View view = plugin.webView.getView();
+        ViewGroup wvParentView = (ViewGroup) view.getParent();
+        if (parentView == null) {
+            parentView = new FrameLayout(plugin.webView.getContext());
+        }
+        float dip = 50f;
+        float px = AdBase.pxFromDp(plugin.webView.getContext(), dip);
+        int adPosition = wvParentView.getHeight() - (int)Math.floor(px);
+
+        if (wvParentView != null && wvParentView != parentView) {
+            wvParentView.removeView(view);
+            parentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            parentView.addView(view);
+            wvParentView.addView(parentView);
+        }
+        view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, adPosition));
+    }
 }

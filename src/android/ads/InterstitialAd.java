@@ -2,43 +2,19 @@ package com.appodealprime.ads;
 
 import android.util.Log;
 
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.InterstitialAd;
-import com.facebook.ads.InterstitialAdListener;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
-import com.appodeal.Action;
-import com.appodeal.Events;
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.InterstitialCallbacks;
+import com.appodealprime.Action;
+import com.appodealprime.Events;
 
 public class InterstitialAd extends AdBase {
-    private static final String TAG = "AppodealPrime::InterstitialAd";
-    private InterstitialAd interstitialAd;
+    private static final String TAG = "AP::InterstitialAd";
 
-    FBInterstitialAd(int id, String placementID) {
-        super(id, placementID);
-    }
-
-    public static boolean executeInterstitialLoadAction(Action action, CallbackContext callbackContext) {
-        plugin.cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                FBInterstitialAd fbInterstitialAd = (FBInterstitialAd) action.getAd();
-                if (fbInterstitialAd == null) {
-                    fbInterstitialAd = new FBInterstitialAd(
-                            action.optId(),
-                            action.getPlacementID()
-                    );
-                }
-                fbInterstitialAd.load();
-                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
-                callbackContext.sendPluginResult(result);
-            }
-        });
-
-        return true;
+    InterstitialAd(int id) {
+        super(id);
     }
 
     public static boolean executeInterstitialShowAction(Action action, CallbackContext callbackContext) {
@@ -46,14 +22,13 @@ public class InterstitialAd extends AdBase {
             @Override
             public void run() {
 
-                FBInterstitialAd fbInterstitialAd = (FBInterstitialAd) action.getAd();
-                if (fbInterstitialAd == null) {
-                    fbInterstitialAd = new FBInterstitialAd(
-                            action.optId(),
-                            action.getPlacementID()
+                InterstitialAd interstitialAd = (InterstitialAd) action.getAd();
+                if (interstitialAd == null) {
+                    interstitialAd = new InterstitialAd(
+                            action.optId()
                     );
                 }
-                fbInterstitialAd.show();
+                interstitialAd.show();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -63,47 +38,37 @@ public class InterstitialAd extends AdBase {
     }
 
     public void show() {
-        if (interstitialAd != null) {
-            interstitialAd.show();
-        }
-    }
+        Appodeal.show(plugin.cordova.getActivity(), Appodeal.INTERSTITIAL);
 
-    public void load() {
-        if (interstitialAd == null) {
-            interstitialAd = new InterstitialAd(plugin.webView.getContext(), placementID);
-        }
-        interstitialAd.loadAd();
-
-        interstitialAd.setAdListener(new InterstitialAdListener() {
+        Appodeal.setInterstitialCallbacks(new InterstitialCallbacks() {
             @Override
-            public void onInterstitialDisplayed(Ad ad) {
-                plugin.emit(Events.INTERSTITIAL_DISPLAYED);
+            public void onInterstitialLoaded(boolean b) {
+                Log.d(TAG, "on Interstitial loaded");
             }
 
             @Override
-            public void onInterstitialDismissed(Ad ad) {
-                plugin.emit(Events.INTERSTITIAL_CLOSE);
+            public void onInterstitialFailedToLoad() {
+                Log.d(TAG, "Interstitial Failed to load");
             }
 
             @Override
-            public void onError(Ad ad, AdError adError) {
-                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
-                plugin.emit(Events.INTERSTITIAL_LOAD_FAIL);
+            public void onInterstitialShown() {
+                Log.d(TAG, "Interstitial shown");
             }
 
             @Override
-            public void onAdLoaded(Ad ad) {
-                plugin.emit(Events.INTERSTITIAL_LOAD);
+            public void onInterstitialClicked() {
+                Log.d(TAG, "Interstitial clicked");
             }
 
             @Override
-            public void onAdClicked(Ad ad) {
-                plugin.emit(Events.INTERSTITIAL_CLICK);
+            public void onInterstitialClosed() {
+                Log.d(TAG, "Interstitial closed");
             }
 
             @Override
-            public void onLoggingImpression(Ad ad) {
-                plugin.emit(Events.INTERSTITIAL_IMPRESSION);
+            public void onInterstitialExpired() {
+                Log.d(TAG, "Interstitial expired");
             }
         });
     }

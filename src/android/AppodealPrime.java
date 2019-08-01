@@ -22,6 +22,7 @@ import com.appodealprime.ads.AdBase;
 import com.appodealprime.ads.BannerAd;
 import com.appodealprime.ads.InterstitialAd;
 import com.appodealprime.ads.NativeAd;
+import com.appodealprime.ads.RewardVideo;
 
 public class AppodealPrime extends CordovaPlugin {
 
@@ -36,6 +37,7 @@ public class AppodealPrime extends CordovaPlugin {
         super.initialize(cordova, webView);
         Appodeal.setTesting(true);
         Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
+
 
         Appodeal.initialize(
                 cordova.getActivity(),
@@ -72,6 +74,10 @@ public class AppodealPrime extends CordovaPlugin {
         }
         else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
+        } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
+            return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
+        } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
+            return RewardVideo.executeShowAction(action, callbackContext);
         }
 //        else if (Actions.NATIVE_LOAD.equals(actionKey)) {
 //            return NativeAd.executeNativeLoadAction(action, callbackContext);
@@ -93,6 +99,12 @@ public class AppodealPrime extends CordovaPlugin {
         readyCallbackContext = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+        Appodeal.onResume(cordova.getActivity(), Appodeal.BANNER_BOTTOM);
     }
 
     public void emit(String eventType) {
