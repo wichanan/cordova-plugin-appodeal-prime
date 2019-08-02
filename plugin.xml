@@ -334,7 +334,7 @@
 	    </config-file>
 	    
 	    <framework src="com.google.android.gms:play-services-ads:17.+" />
-	    <framework src="com.google.android.gms:play-services-location:1.7+" />
+	    <framework src="com.google.android.gms:play-services-location:17+" />
 	    <framework src="com.google.android.exoplayer:exoplayer-core:2.8.4" />
 	    <framework src="com.google.android.exoplayer:exoplayer-hls:2.8.4" />
 
