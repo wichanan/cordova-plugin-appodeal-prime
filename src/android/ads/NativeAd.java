@@ -12,21 +12,26 @@ import org.json.JSONObject;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.Native;
+import com.appodeal.ads.NativeCallbacks;
 import com.appodealprime.Action;
 import com.appodealprime.Events;
 
 public class NativeAd extends AdBase {
-    private static final String TAG = "AppodealPrime::NativeADs";
+    private static final String TAG = "AP::NativeADs";
     private NativeAd nativeAd;
     private View nativeAdView;
     private ViewGroup parentView;
     private JSONObject position;
 
-    NativeAd(int id, JSONObject position) {
-        super(id);
+    private List<com.appodeal.ads.NativeAd> loadedNativeads;
 
-        this.position = position;
+    NativeAd(int id) {
+        super(id);
+        Appodeal.cache(plugin.cordova.getActivity(), Appodeal.NATIVE);
     }
 
     public static boolean executeNativeLoadAction(Action action, CallbackContext callbackContext) {
@@ -37,11 +42,10 @@ public class NativeAd extends AdBase {
                 NativeAd nativeAd = (NativeAd) action.getAd();
                 if (nativeAd == null) {
                     nativeAd = new NativeAd(
-                            action.optId(),
-                            action.optPosition()
+                            action.optId()
                     );
                 }
-//                nativeAd.load();
+                nativeAd.load();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -59,10 +63,10 @@ public class NativeAd extends AdBase {
 //                if (fbNativeAd == null) {
 //                    fbNativeAd = new FBNativeAd(
 //                            action.optId(),
-//                            action.getPlacementID(),
 //                            action.optPosition()
 //                    );
 //                }
+//                this.position = action.optPosition()
 //                fbNativeAd.show();
 //                PluginResult result = new PluginResult(PluginResult.Status.OK, "");
 //                callbackContext.sendPluginResult(result);
@@ -110,23 +114,9 @@ public class NativeAd extends AdBase {
 //        return true;
 //    }
 //
-//    public void hide() {
-//        if (nativeAdView != null) {
-//            View view = plugin.webView.getView();
-//            nativeAd.destroy();
-//
-//            if (view.getParent() != null) {
-//                ((ViewGroup)view.getParent()).removeView(view);
-//            }
-//            parentView.addView(view);
-//
-//            parentView.removeView(nativeAdView);
-//
-//            parentView.bringToFront();
-//            parentView.requestLayout();
-//            parentView.requestFocus();
-//        }
-//    }
+    public void hide() {
+        
+    }
 //
 //    public void hideAll() {
 //        View view = plugin.webView.getView();
@@ -140,16 +130,38 @@ public class NativeAd extends AdBase {
 //        }
 //    }
 //
-//    public void load() {
-//        if (nativeAd == null) {
-//            nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
-//            if (!nativeAd.isAdLoaded()) {
-//                nativeAd.loadAd();
-//            }
-//        }
-//    }
-//
-//    public void show() {
+    public void load() {
+        Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ALL);
+        Appodeal.setNativeCallbacks(new NativeCallbacks() {
+            @Override
+            public void onNativeLoaded() {
+                Log.d(TAG, "Native loaded");
+                loadedNativeads = Appodeal.getNativeAds(1);
+            }
+
+            @Override
+            public void onNativeFailedToLoad() {
+                Log.d(TAG, "Native fail to load");
+            }
+
+            @Override
+            public void onNativeShown(com.appodeal.ads.NativeAd nativeAd) {
+                Log.d(TAG, "Native shown");
+            }
+
+            @Override
+            public void onNativeClicked(com.appodeal.ads.NativeAd nativeAd) {
+                Log.d(TAG, "Native clicked");
+            }
+
+            @Override
+            public void onNativeExpired() {
+                Log.d(TAG, "Native expired");
+            }
+        });
+    }
+
+//    public void show(JSONObject position) {
 //        if (nativeAdView == null) {
 //            nativeAd = new NativeAd(plugin.webView.getContext(), placementID);
 //            addNativeView(nativeAd);
@@ -166,34 +178,6 @@ public class NativeAd extends AdBase {
 //            addNativeView(nativeAd);
 //        }
 //
-//        nativeAd.setAdListener(new NativeAdListener() {
-//            @Override
-//            public void onMediaDownloaded(Ad ad) {
-//                Log.d(TAG, "Media loaded");
-//                plugin.emit(Events.NATIVE_MEDIA_LOAD);
-//            }
-//
-//            @Override
-//            public void onError(Ad ad, AdError adError) {
-//                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
-//                plugin.emit(Events.NATIVE_LOAD_FAIL);
-//            }
-//
-//            @Override
-//            public void onAdLoaded(Ad ad) {
-//                plugin.emit(Events.NATIVE_LOAD);
-//            }
-//
-//            @Override
-//            public void onAdClicked(Ad ad) {
-//                plugin.emit(Events.NATIVE_CLICK);
-//            }
-//
-//            @Override
-//            public void onLoggingImpression(Ad ad) {
-//                plugin.emit(Events.NATIVE_IMPRESSION);
-//            }
-//        });
 //    }
 //
 //    private void addNativeView(NativeAd nativeAd) {

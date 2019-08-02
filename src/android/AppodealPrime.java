@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.Native;
 import com.appodealprime.ads.AdBase;
 import com.appodealprime.ads.BannerAd;
 import com.appodealprime.ads.InterstitialAd;
@@ -37,7 +38,7 @@ public class AppodealPrime extends CordovaPlugin {
         super.initialize(cordova, webView);
         Appodeal.setTesting(true);
         Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
-
+        Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ICON);
 
         Appodeal.initialize(
                 cordova.getActivity(),
@@ -78,6 +79,8 @@ public class AppodealPrime extends CordovaPlugin {
             return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
         } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
             return RewardVideo.executeShowAction(action, callbackContext);
+        } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
+            return NativeAd.executeNativeLoadAction(action, callbackContext);
         }
 //        else if (Actions.NATIVE_LOAD.equals(actionKey)) {
 //            return NativeAd.executeNativeLoadAction(action, callbackContext);
