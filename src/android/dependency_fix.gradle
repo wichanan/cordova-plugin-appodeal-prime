@@ -14,3 +14,19 @@ configurations.all{
 		}
     }
 }
+
+repositories{
+  flatDir {
+      dirs 'libs'
+   }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+}
+
+android {
+	dexOptions {
+		preDexLibraries = false
+	}
+}

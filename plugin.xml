@@ -342,6 +342,8 @@
 	    <framework src="com.google.android.gms:play-services-location:17.+" />
 	    <framework src="com.google.android.exoplayer:exoplayer-core:2.8.4" />
 	    <framework src="com.google.android.exoplayer:exoplayer-hls:2.8.4" />
+	    <framework src="com.android.support:multidex:1.0.3" />
+	    <framework src="com.google.code.gson:gson:2.7" />
 
 	    <framework src="com.android.support:support-v4:27+" />
 	    <framework src="com.android.support:recyclerview-v7:27+" />
@@ -360,7 +362,6 @@
 	    <source-file src="libs/Android/converter-gson-2.2.0.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/facebook-5.2.0.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/fetch-1.1.5.jar" target-dir="app/libs" />
-	    <source-file src="libs/Android/gson-2.7.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/inmobi-7.2.7.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/ironsource-6.8.2.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/logging-interceptor-3.7.0.jar" target-dir="app/libs" />
@@ -376,6 +377,31 @@
 	    <source-file src="libs/Android/vungle-6.3.24.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/yandex-metrica-3.5.3.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/yandex-mobileads-2.91.jar" target-dir="app/libs" />
+
+	    <!-- arr files -->
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-alphab.aar" target="app/libs/mintegral-9.11.01-alphab.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-common.aar" target="app/libs/mintegral-9.11.01-common.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-interstitial.aar" 
+	    	target="app/libs/mintegral-9.11.01-interstitial.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-interstitialvideo.aar" 
+	    	target="app/ibs/mintegral-9.11.01-interstitialvideo.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgdownloads.aar" 
+	    	target="app/libs/mintegral-9.11.01-mtgdownloads.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgjscommon.aar" 
+	    	target="app/libs/mintegral-9.11.01-mtgjscommon.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgnative.aar" 
+	    	target="app/libs/mintegral-9.11.01-mtgnative.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-nativeex.aar" 
+	    	target="app/libs/mintegral-9.11.01-nativeex.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-playercommon.aar" 
+	    	target="app/libs/mintegral-9.11.01-playercommon.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-reward.aar" 
+	    	target="app/libs/mintegral-9.11.01-reward.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-videocommon.aar" 
+	    	target="app/libs/mintegral-9.11.01-videocommon.aar" />
+	    <resource-file src="libs/Android/aar/mintegral-9.11.01-videojs.aar" 
+	    	target="app/libs/mintegral-9.11.01-videojs.aar" />
+
 
 	    <!-- <source-file src="src/android/AppodealPlugin.java" target-dir="src/com/appodealprime/appodealprime" /> -->
         <source-file src="src/android/Actions.java" target-dir="src/com/appodealprime" />
