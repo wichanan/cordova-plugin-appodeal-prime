@@ -1,4 +1,4 @@
-def right_version = "15+"; //version from Appodeal plugin
+def right_version = "17.+"; //version from Appodeal plugin
 configurations.all{
 	dependencies.all{ Dependency d ->
 		def right_version_copy = right_version
@@ -23,15 +23,11 @@ repositories{
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+		compile 'com.android.support:multidex:1.0.3'
 }
 
 android {
-	dexOptions {
-		preDexLibraries = false
-	}
-
 	defaultConfig { 
 		multiDexEnabled true
 	} 
-		
 }
