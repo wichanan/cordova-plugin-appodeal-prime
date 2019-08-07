@@ -19,7 +19,6 @@
     "*.xml",
     "src",
     "ts",
-    "libs",
     "www"
   ],
   "keywords": [

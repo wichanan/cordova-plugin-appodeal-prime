@@ -29,4 +29,9 @@ android {
 	dexOptions {
 		preDexLibraries = false
 	}
+
+	defaultConfig { 
+		multiDexEnabled true
+	} 
+		
 }
