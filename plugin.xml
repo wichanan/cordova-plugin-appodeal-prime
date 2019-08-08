@@ -21,6 +21,7 @@
 	<dependency id="cordova-custom-config"/>
 
 	<platform name="android">
+		<preference name="ANDROID_ADMOB_APP_KEY" />
         <preference name="ANDROID_APP_KEY" />
 	    <config-file parent="/*" target="res/xml/config.xml">
 			<feature name="AppodealPrime">
@@ -39,6 +40,9 @@
 	            android:name="com.appodeal.ads.appodealprime.APP_KEY"
 	            android:value="$ANDROID_APP_KEY" />
 
+        	<meta-data
+				android:name="com.google.android.gms.ads.APPLICATION_ID"
+				android:value="$ANDROID_ADMOB_APP_KEY"/>
 			<activity android:name="com.appodeal.ads.InterstitialActivity"
 	            android:configChanges="orientation|screenSize"
 	            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
@@ -343,18 +347,16 @@
 	    <framework src="com.google.android.exoplayer:exoplayer-core:2.8.4" />
 	    <framework src="com.google.android.exoplayer:exoplayer-hls:2.8.4" />
 	    <framework src="com.android.support:multidex:1.0.3" />
-	    <framework src="com.google.code.gson:gson:2.7" />
 
 	    <framework src="com.android.support:support-v4:27+" />
 	    <framework src="com.android.support:recyclerview-v7:27+" />
 
 	    <framework src="src/android/dependency_fix.gradle" custom="true" type="gradleReference" />
-
-	    <!-- <framework src="com.appodeal.ads:maxdex:2.5.6" />
+	    
+	    <framework src="com.appodeal.ads:nodex:2.5.6" />
 	    <framework src="com.appodeal.optional:flurry-ads:11.6.0" />
-	    <framework src="com.appodeal.optional:flurry-analytics:11.6.0" /> -->
-
-	    <source-file src="libs/Android/appodeal-2.5.6.jar" target-dir="app/libs" />
+	    <framework src="com.appodeal.optional:flurry-analytics:11.6.0" />
+	    <!-- <source-file src="libs/Android/appodeal-2.5.6.jar" target-dir="app/libs" />
 
 	    <source-file src="libs/Android/inmobi-7.2.7.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/picasso-2.5.2.jar" target-dir="app/libs" />
@@ -363,31 +365,19 @@
 	    <source-file src="libs/Android/optional/flurry-ads-11.6.0.jar" target-dir="app/libs" />
 	    <source-file src="libs/Android/optional/flurry-analytics-11.6.0.jar" target-dir="app/libs" />
 
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-alphab.aar" target="app/libs/mintegral-9.11.01-alphab.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-common.aar" target="app/libs/mintegral-9.11.01-common.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-interstitial.aar" 
-	    	target="app/libs/mintegral-9.11.01-interstitial.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-interstitialvideo.aar" 
-	    	target="app/ibs/mintegral-9.11.01-interstitialvideo.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgdownloads.aar" 
-	    	target="app/libs/mintegral-9.11.01-mtgdownloads.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgjscommon.aar" 
-	    	target="app/libs/mintegral-9.11.01-mtgjscommon.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-mtgnative.aar" 
-	    	target="app/libs/mintegral-9.11.01-mtgnative.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-nativeex.aar" 
-	    	target="app/libs/mintegral-9.11.01-nativeex.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-playercommon.aar" 
-	    	target="app/libs/mintegral-9.11.01-playercommon.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-reward.aar" 
-	    	target="app/libs/mintegral-9.11.01-reward.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-videocommon.aar" 
-	    	target="app/libs/mintegral-9.11.01-videocommon.aar" />
-	    <resource-file src="libs/Android/aar/mintegral-9.11.01-videojs.aar" 
-	    	target="app/libs/mintegral-9.11.01-videojs.aar" />
-    	<resource-file src="libs/Android/aar/ogury-3.0.36.aar" 
-	    	target="app/libs/ogury-3.0.36.aar" />
-
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-alphab.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-common.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-interstitial.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-interstitialvideo.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-mtgdownloads.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-mtgjscommon.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-mtgnative.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-nativeex.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-playercommon.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-reward.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-videocommon.aar" target-dir="app/libs" />
+	    <source-file src="libs/Android/aar/mintegral-9.11.01-videojs.aar" target-dir="app/libs" />
+    	<source-file src="libs/Android/aar/ogury-3.0.36.aar" target-dir="app/libs" /> -->
 
         <source-file src="src/android/Actions.java" target-dir="src/com/appodealprime" />
         <source-file src="src/android/Action.java" target-dir="src/com/appodealprime" />
