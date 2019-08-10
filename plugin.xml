@@ -46,7 +46,7 @@
 	    <edit-config xmlns:android="http://schemas.android.com/apk/res/android" file="app/src/main/AndroidManifest.xml" mode="merge" 	target="/manifest/application">
 	        <application android:networkSecurityConfig="@xml/network_security_config" />
 	    </edit-config>
-	    <resource-file src="src/android/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+	    <resource-file src="src/android/network_security_config.xml" target="res/xml/network_security_config.xml"  />
 	    
 	    <framework src="com.google.android.gms:play-services-ads:16.+" />
 	    <framework src="com.google.android.gms:play-services-location:16.+" />
@@ -59,7 +59,7 @@
 
 	    <framework src="src/android/dependency_fix.gradle" custom="true" type="gradleReference" />
 	    
-	    <framework src="com.appodeal.ads:nodex:2.5.6" />
+	    <framework src="com.appodeal.ads:maxdex:2.5.6" />
 	    <framework src="com.appodeal.optional:flurry-ads:11.6.0" />
 	    <framework src="com.appodeal.optional:flurry-analytics:11.6.0" />
 

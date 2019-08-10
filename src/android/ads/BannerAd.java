@@ -66,13 +66,42 @@ public class BannerAd extends AdBase {
     }
 
     public void hide(boolean withParam) {
-        Appodeal.hide(plugin.cordova.getActivity(), Appodeal.BANNER_BOTTOM);
+        Log.d(TAG, "banner ad hide function");
+
+        if (bannerView != null) {
+            Appodeal.hide(plugin.cordova.getActivity(), Appodeal.BANNER);
+            View view = plugin.webView.getView();
+            if (view.getParent() != null) {
+                ((ViewGroup)view.getParent()).removeView(view);
+            }
+            FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    parentView.getHeight()
+            );
+            if (withParam) {
+                view.setLayoutParams(webViewParams);
+                bannerView = null;
+            }
+            parentView.addView(view);
+            parentView.bringToFront();
+            parentView.requestLayout();
+            parentView.requestFocus();
+//            bringNativeAdsToFront();
+        }
     }
 
     public void show() {
 //        bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
-        Appodeal.show(plugin.cordova.getActivity(), Appodeal.BANNER_BOTTOM);
-        adjustViewHeight();
+        if (bannerView == null) {
+            bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
+        } else {
+            Log.d(TAG, "show log");
+            hide(false);
+            bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
+        }
+        addBannerView(bannerView);
+
+        Log.d(TAG, "Appodeal banner show function");
 
         Appodeal.setBannerCallbacks(new BannerCallbacks() {
             @Override
@@ -102,8 +131,16 @@ public class BannerAd extends AdBase {
             }
         });
     }
+
+    @Override
+    public void destroy() {
+        Log.d(TAG, "banner ad on destroy");
+        Appodeal.destroy(Appodeal.BANNER);
+
+        super.destroy();
+    }
     
-    private void adjustViewHeight() {
+    private void addBannerView(BannerView bannerView) {
         View view = plugin.webView.getView();
         ViewGroup wvParentView = (ViewGroup) view.getParent();
         if (parentView == null) {
@@ -121,5 +158,23 @@ public class BannerAd extends AdBase {
             wvParentView.addView(parentView);
         }
         view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, adPosition));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, adPosition, 0, 0);
+        bannerView.setLayoutParams(params);
+        parentView.addView(bannerView);
+
+        parentView.bringToFront();
+        parentView.requestLayout();
+        parentView.requestFocus();
+
+        int countwv = parentView.getChildCount();
+        for (int i = 0; i<countwv; i++) {
+            View v = parentView.getChildAt(i);
+            Log.d(TAG, "Iterate view type" + v.getClass().getName());
+        }
+
+        Appodeal.show(plugin.cordova.getActivity(), Appodeal.BANNER_VIEW);
     }
 }

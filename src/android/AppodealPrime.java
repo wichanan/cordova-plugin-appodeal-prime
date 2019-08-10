@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.AppodealNetworks;
 import com.appodeal.ads.Native;
 import com.appodealprime.ads.AdBase;
 import com.appodealprime.ads.BannerAd;
@@ -37,8 +38,9 @@ public class AppodealPrime extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         Appodeal.setTesting(true);
+        Appodeal.disableNetwork(cordova.getActivity(), AppodealNetworks.ADMOB);
         Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
-        Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ICON);
+        Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ALL);
 
         Appodeal.initialize(
                 cordova.getActivity(),
@@ -75,16 +77,18 @@ public class AppodealPrime extends CordovaPlugin {
         }
         else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
+        } else if (Actions.BANNER_HIDE.equals(actionKey)) {
+            return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
         } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
             return RewardVideo.executeShowAction(action, callbackContext);
         } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
             return NativeAd.executeNativeLoadAction(action, callbackContext);
+        }else if (Actions.NATIVE_HIDE.equals(actionKey)) {
+            return NativeAd.executeNativeLoadAction(action, callbackContext);
         }
-//        else if (Actions.NATIVE_LOAD.equals(actionKey)) {
-//            return NativeAd.executeNativeLoadAction(action, callbackContext);
-//        } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
+        //else if (Actions.NATIVE_SHOW.equals(actionKey)) {
 //            return NativeAd.executeNativeShowAction(action, callbackContext);
 //        } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
 //            return NativeAd.executeNativeHideAction(action, callbackContext);

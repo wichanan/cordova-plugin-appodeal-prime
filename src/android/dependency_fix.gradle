@@ -14,14 +14,15 @@ configurations.all{
 }
 
 dependencies {
-	implementation('com.google.android.exoplayer:exoplayer-core:2.8.4') {
+	compile('com.google.android.exoplayer:exoplayer-core:2.8.4') {
 		transitive = true
-		exclude group: "com.android.support"
+		exclude module: 'support-annotations'
 	}
-	implementation('com.google.android.exoplayer:exoplayer-hls:2.8.4') {
+
+	compile('com.google.android.exoplayer:exoplayer-hls:2.8.4') {
 		transitive = true
-		exclude group: "com.android.support"
-	} 
+		exclude module: 'support-annotations'
+	}
 }
 
 repositories{
