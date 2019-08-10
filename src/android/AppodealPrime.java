@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.AppodealNetworks;
 import com.appodeal.ads.Native;
+import com.appodeal.ads.NativeAd;
+import com.appodeal.ads.NativeCallbacks;
+import com.appodealprime.ads.APNativeAd;
 import com.appodealprime.ads.AdBase;
 import com.appodealprime.ads.BannerAd;
 import com.appodealprime.ads.InterstitialAd;
-import com.appodealprime.ads.NativeAd;
 import com.appodealprime.ads.RewardVideo;
 
 public class AppodealPrime extends CordovaPlugin {
@@ -33,6 +35,7 @@ public class AppodealPrime extends CordovaPlugin {
     private CallbackContext readyCallbackContext = null;
 
     private ArrayList<PluginResult> waitingForReadyCallbackContextResults = new ArrayList<PluginResult>();
+    public static String apiKey;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -40,12 +43,11 @@ public class AppodealPrime extends CordovaPlugin {
         Appodeal.setTesting(true);
         Appodeal.disableNetwork(cordova.getActivity(), AppodealNetworks.ADMOB);
         Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
-        Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ALL);
-
+        apiKey = this.getApiKey();
         Appodeal.initialize(
                 cordova.getActivity(),
-                this.getApiKey(),
-                Appodeal.BANNER | Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO | Appodeal.NATIVE,
+                apiKey,
+                Appodeal.BANNER | Appodeal.INTERSTITIAL | Appodeal.REWARDED_VIDEO,
                 true);
         AdBase.initialize(this);
     }
@@ -84,14 +86,14 @@ public class AppodealPrime extends CordovaPlugin {
         } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
             return RewardVideo.executeShowAction(action, callbackContext);
         } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
-            return NativeAd.executeNativeLoadAction(action, callbackContext);
-        }else if (Actions.NATIVE_HIDE.equals(actionKey)) {
-            return NativeAd.executeNativeLoadAction(action, callbackContext);
+            return APNativeAd.executeNativeLoadAction(action, callbackContext);
+        } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
+            return APNativeAd.executeNativeHideAction(action, callbackContext);
+        } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
+            return APNativeAd.executeNativeShowAction(action, callbackContext);
         }
-        //else if (Actions.NATIVE_SHOW.equals(actionKey)) {
-//            return NativeAd.executeNativeShowAction(action, callbackContext);
 //        } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
-//            return NativeAd.executeNativeHideAction(action, callbackContext);
+//            return APNativeAd.executeNativeHideAction(action, callbackContext);
 //        } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
 //            return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
 //        } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
@@ -138,7 +140,7 @@ public class AppodealPrime extends CordovaPlugin {
 
     private String getApiKey() {
         try {
-            ApplicationInfo ai = cordova.getActivity().getApplicationContext().getPackageManager().getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo ai = this.cordova.getActivity().getApplicationContext().getPackageManager().getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             return bundle.getString("com.appodeal.ads.appodealprime.APP_KEY");
         } catch (Exception e) {
