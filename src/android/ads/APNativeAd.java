@@ -106,23 +106,20 @@ public class APNativeAd extends AdBase {
 
             View view = plugin.webView.getView();
             ViewGroup wvParentView = (ViewGroup) view.getParent();
-
-            int count = wvParentView.getChildCount();
-            ArrayList<View> views = new ArrayList<View>();
-            for (int i = 0; i<count; i++) {
-                View v = wvParentView.getChildAt(i);
-                Log.d(TAG, "Bring banner to front 44" + v.getClass().getName());
-                if (v instanceof BannerView) {
-                    views.add(v);
-                }
+            if (view.getParent() != null) {
+                wvParentView.removeView(view);
             }
+            parentView.addView(view);
+            BannerView banner = getShownBannerView();
 
             parentView.removeView(nativeAdView);
+            if (banner != null) {
+                parentView.addView(banner);
+            }
 
             parentView.bringToFront();
             parentView.requestLayout();
             parentView.requestFocus();
-            bringBannerToFront();
         }
     }
 
@@ -162,7 +159,7 @@ public class APNativeAd extends AdBase {
             }
         });
 
-        Appodeal.cache(plugin.cordova.getActivity(), Appodeal.NATIVE, 3);
+        Appodeal.cache(plugin.cordova.getActivity(), Appodeal.NATIVE, 2);
     }
 
     public void show() {
@@ -186,7 +183,6 @@ public class APNativeAd extends AdBase {
         }
 
         addNativeView(nativeAd);
-        bringBannerToFront();
     }
 
     private void addNativeView(NativeAd nativeAd) {
@@ -201,8 +197,10 @@ public class APNativeAd extends AdBase {
         if (parentView == null) {
             parentView = new FrameLayout(plugin.webView.getContext());
         }
+
+        BannerView banner = getShownBannerView();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, adHeight
+            ViewGroup.LayoutParams.MATCH_PARENT, adHeight
         );
         if (wvParentView != null && wvParentView != parentView) {
             wvParentView.removeView(view);
@@ -212,6 +210,9 @@ public class APNativeAd extends AdBase {
         }
 
         params.setMargins(0, (int) position.optDouble("top"), 0, 0);
+        if (banner != null) {
+            parentView.addView(banner);
+        }
 
         nativeAdView.setLayoutParams(params);
 
@@ -222,22 +223,25 @@ public class APNativeAd extends AdBase {
         nativeAdView.bringToFront();
     }
 
-    private void bringBannerToFront() {
+    private BannerView getShownBannerView() {
         View view = plugin.webView.getView();
         ViewGroup wvParentView = (ViewGroup) view.getParent();
+        BannerView bannerView = null;
 
         int count = wvParentView.getChildCount();
         ArrayList<View> views = new ArrayList<View>();
         for (int i = 0; i<count; i++) {
             View v = wvParentView.getChildAt(i);
-            Log.d(TAG, "Bring banner to front999" + v.getClass().getName());
+            Log.d(TAG, "Bring banner to front909090" + v);
             if (v instanceof BannerView) {
-                views.add(v);
+                bannerView = (BannerView) v;
+                wvParentView.removeView(v);
+            }
+            if (v == null) {
+                wvParentView.removeView(v);
             }
         }
 
-        for(int i = 0; i < views.size(); i++) {
-            views.get(i).bringToFront();
-        }
+        return bannerView;
     }
 }

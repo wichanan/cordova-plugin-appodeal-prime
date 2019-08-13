@@ -67,7 +67,7 @@ public class BannerAd extends AdBase {
 
     public void hide(boolean withParam) {
         if (bannerView != null) {
-            Appodeal.hide(plugin.cordova.getActivity(), Appodeal.BANNER);
+            Appodeal.destroy(Appodeal.BANNER_VIEW);
             View view = plugin.webView.getView();
             if (view.getParent() != null) {
                 ((ViewGroup)view.getParent()).removeView(view);
@@ -76,11 +76,14 @@ public class BannerAd extends AdBase {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     parentView.getHeight()
             );
+
             if (withParam) {
                 view.setLayoutParams(webViewParams);
                 bannerView = null;
             }
+
             parentView.addView(view);
+            parentView.removeView(bannerView);
             parentView.bringToFront();
             parentView.requestLayout();
             parentView.requestFocus();
@@ -90,11 +93,8 @@ public class BannerAd extends AdBase {
     public void show() {
         if (bannerView == null) {
             bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
-        } else {
-            hide(false);
-            bannerView = Appodeal.getBannerView(plugin.cordova.getActivity());
         }
-        addBannerView(bannerView);
+        addBannerView();
 
         Appodeal.setBannerCallbacks(new BannerCallbacks() {
             @Override
@@ -131,8 +131,9 @@ public class BannerAd extends AdBase {
 
         super.destroy();
     }
-    
-    private void addBannerView(BannerView bannerView) {
+
+    private void addBannerView() {
+        Log.d(TAG, "Adding banner view for appodeal ads");
         View view = plugin.webView.getView();
         ViewGroup wvParentView = (ViewGroup) view.getParent();
         if (parentView == null) {
@@ -146,7 +147,7 @@ public class BannerAd extends AdBase {
             wvParentView.removeView(view);
             parentView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             if (parentView.getParent() != null) {
-                wvParentView.removeView(parentView);
+                ((ViewGroup)parentView.getParent()).removeView(parentView);
             }
             parentView.addView(view);
             wvParentView.addView(parentView);
