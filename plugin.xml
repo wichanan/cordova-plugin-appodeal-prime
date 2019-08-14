@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin 
 	id="cordova-appodeal-prime"
-	version="0.0.7"
+	version="0.0.8"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>Appodeal Prime</name>
@@ -70,7 +70,7 @@
         <source-file src="src/android/AppodealPrime.java" target-dir="src/com/appodealprime" />
         <source-file src="src/android/ads/AdBase.java" target-dir="src/com/appodealprime/ads" />
         <source-file src="src/android/ads/BannerAd.java" target-dir="src/com/appodealprime/ads" />
-        <source-file src="src/android/ads/NativeAd.java" target-dir="src/com/appodealprime/ads" />
+        <source-file src="src/android/ads/APNativeAd.java" target-dir="src/com/appodealprime/ads" />
         <source-file src="src/android/ads/InterstitialAd.java" target-dir="src/com/appodealprime/ads" />
         <source-file src="src/android/ads/RewardVideo.java" target-dir="src/com/appodealprime/ads" />
 	</platform>
