@@ -103,23 +103,9 @@ public class APNativeAd extends AdBase {
             nativeAdView.destroy();
 
             nativeAd.destroy();
-
             View view = plugin.webView.getView();
             ViewGroup wvParentView = (ViewGroup) view.getParent();
-            if (view.getParent() != null) {
-                wvParentView.removeView(view);
-            }
-            parentView.addView(view);
-            BannerView banner = getShownBannerView();
-
-            parentView.removeView(nativeAdView);
-            if (banner != null) {
-                parentView.addView(banner);
-            }
-
-            parentView.bringToFront();
-            parentView.requestLayout();
-            parentView.requestFocus();
+            wvParentView.removeView(nativeAdView);
         }
     }
 

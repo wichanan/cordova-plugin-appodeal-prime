@@ -40,9 +40,8 @@ public class AppodealPrime extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        Appodeal.setTesting(true);
-        Appodeal.disableNetwork(cordova.getActivity(), AppodealNetworks.ADMOB);
-        Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose);
+        // Appodeal.disableNetwork(cordova.getActivity(), AppodealNetworks.ADMOB);
+        // Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.debug);
         apiKey = this.getApiKey();
         Appodeal.initialize(
                 cordova.getActivity(),
@@ -73,13 +72,10 @@ public class AppodealPrime extends CordovaPlugin {
             }
             emit(Events.READY, data);
             return true;
-//        } else if (Actions.BANNER_HIDE.equals(actionKey)) {
-//            return BannerAd.executeHideAction(action, callbackContext);
-//        }
-        }
-        else if (Actions.BANNER_SHOW.equals(actionKey)) {
+        } else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
         } else if (Actions.BANNER_HIDE.equals(actionKey)) {
+            Log.d(TAG, "Hide banner acrion");
             return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
@@ -88,17 +84,11 @@ public class AppodealPrime extends CordovaPlugin {
         } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
             return APNativeAd.executeNativeLoadAction(action, callbackContext);
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
+            Log.d(TAG, "Hide Native acrion");
             return APNativeAd.executeNativeHideAction(action, callbackContext);
         } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
             return APNativeAd.executeNativeShowAction(action, callbackContext);
         }
-//        } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
-//            return APNativeAd.executeNativeHideAction(action, callbackContext);
-//        } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
-//            return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
-//        } else if (Actions.REWARD_VIDEO_SHOW.equals(actionKey)) {
-//            return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
-//        }
 
         return false;
     }
@@ -113,7 +103,8 @@ public class AppodealPrime extends CordovaPlugin {
     @Override
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
-        Appodeal.onResume(cordova.getActivity(), Appodeal.BANNER_BOTTOM);
+        Log.d(TAG, "onResume");
+        Appodeal.onResume(cordova.getActivity(), Appodeal.BANNER_VIEW);
     }
 
     public void emit(String eventType) {

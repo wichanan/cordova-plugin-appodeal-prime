@@ -22,6 +22,7 @@ public class BannerAd extends AdBase {
     private static final String TAG = "AppodealPrime::BannerAD";
     private ViewGroup parentView;
     private BannerView bannerView;
+    public static Boolean isBannerShowing = false;
 
     BannerAd(int id) {
         super(id);
@@ -39,6 +40,7 @@ public class BannerAd extends AdBase {
                             action.optId()
                     );
                 }
+                isBannerShowing = true;
                 bannerAd.show();
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
@@ -53,10 +55,10 @@ public class BannerAd extends AdBase {
             @Override
             public void run() {
                 BannerAd bannerAd = (BannerAd) action.getAd();
+                isBannerShowing = false;
                 if (bannerAd != null) {
                     bannerAd.hide(true);
                 }
-
                 PluginResult result = new PluginResult(PluginResult.Status.OK, "");
                 callbackContext.sendPluginResult(result);
             }
@@ -67,7 +69,9 @@ public class BannerAd extends AdBase {
 
     public void hide(boolean withParam) {
         if (bannerView != null) {
-            Appodeal.destroy(Appodeal.BANNER_VIEW);
+            Appodeal.hide(plugin.cordova.getActivity(), Appodeal.BANNER_VIEW);
+            ((ViewGroup)bannerView.getParent()).removeView(bannerView);
+            bannerView.removeAllViews();
             View view = plugin.webView.getView();
             if (view.getParent() != null) {
                 ((ViewGroup)view.getParent()).removeView(view);
@@ -79,11 +83,9 @@ public class BannerAd extends AdBase {
 
             if (withParam) {
                 view.setLayoutParams(webViewParams);
-                bannerView = null;
             }
 
             parentView.addView(view);
-            parentView.removeView(bannerView);
             parentView.bringToFront();
             parentView.requestLayout();
             parentView.requestFocus();
@@ -123,17 +125,17 @@ public class BannerAd extends AdBase {
                 Log.d(TAG, "Banner Expired");
             }
         });
+
     }
 
     @Override
     public void destroy() {
-        Appodeal.destroy(Appodeal.BANNER);
+        Appodeal.destroy(Appodeal.BANNER_VIEW);
 
         super.destroy();
     }
 
     private void addBannerView() {
-        Log.d(TAG, "Adding banner view for appodeal ads");
         View view = plugin.webView.getView();
         ViewGroup wvParentView = (ViewGroup) view.getParent();
         if (parentView == null) {
@@ -159,7 +161,6 @@ public class BannerAd extends AdBase {
         params.setMargins(0, adPosition, 0, 0);
         bannerView.setLayoutParams(params);
         parentView.addView(bannerView);
-        bannerView.bringToFront();
         parentView.bringToFront();
         parentView.requestLayout();
         parentView.requestFocus();
