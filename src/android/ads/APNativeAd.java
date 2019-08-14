@@ -110,7 +110,6 @@ public class APNativeAd extends AdBase {
     }
 
     public void load() {
-        Log.d(TAG, "Native ad load function");
         Appodeal.setRequiredNativeMediaAssetType(Native.MediaAssetType.ALL);
         Appodeal.setNativeAdType(Native.NativeAdType.Auto);
         Appodeal.initialize(
@@ -172,7 +171,6 @@ public class APNativeAd extends AdBase {
     }
 
     private void addNativeView(NativeAd nativeAd) {
-        Log.d(TAG, "Trying native show");
         nativeAdView = new NativeAdViewContentStream(plugin.cordova.getActivity(), nativeAd);
         nativeAdView.registerView(nativeAd);;
         nativeAdView.setVisibility(View.VISIBLE);
@@ -218,7 +216,6 @@ public class APNativeAd extends AdBase {
         ArrayList<View> views = new ArrayList<View>();
         for (int i = 0; i<count; i++) {
             View v = wvParentView.getChildAt(i);
-            Log.d(TAG, "Bring banner to front909090" + v);
             if (v instanceof BannerView) {
                 bannerView = (BannerView) v;
                 wvParentView.removeView(v);

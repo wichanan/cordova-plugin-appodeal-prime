@@ -75,7 +75,6 @@ public class AppodealPrime extends CordovaPlugin {
         } else if (Actions.BANNER_SHOW.equals(actionKey)) {
             return BannerAd.executeShowAction(action, callbackContext);
         } else if (Actions.BANNER_HIDE.equals(actionKey)) {
-            Log.d(TAG, "Hide banner acrion");
             return BannerAd.executeHideAction(action, callbackContext);
         } else if (Actions.INTERSTITIAL_SHOW.equals(actionKey)) {
             return InterstitialAd.executeInterstitialShowAction(action, callbackContext);
@@ -84,7 +83,6 @@ public class AppodealPrime extends CordovaPlugin {
         } else if (Actions.NATIVE_LOAD.equals(actionKey)) {
             return APNativeAd.executeNativeLoadAction(action, callbackContext);
         } else if (Actions.NATIVE_HIDE.equals(actionKey)) {
-            Log.d(TAG, "Hide Native acrion");
             return APNativeAd.executeNativeHideAction(action, callbackContext);
         } else if (Actions.NATIVE_SHOW.equals(actionKey)) {
             return APNativeAd.executeNativeShowAction(action, callbackContext);
