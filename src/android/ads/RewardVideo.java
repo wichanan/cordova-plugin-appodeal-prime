@@ -6,11 +6,13 @@ import android.util.Log;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.RewardedVideoCallbacks;
 import com.appodealprime.Action;
 import com.appodealprime.Events;
 
 public class RewardVideo extends AdBase  {
-    private static final String TAG = "AppodealPrime::RewardVideo";
+    private static final String TAG = "AP::RewardVideo";
 
     RewardVideo(int id) {
         super(id);
@@ -36,44 +38,44 @@ public class RewardVideo extends AdBase  {
         return true;
     }
 
-//    public void show() {
-//        if (rewardedVideoAd == null) {
-//            rewardedVideoAd = new RewardedVideoAd(plugin.webView.getContext(), placementID);
-//        }
-//        rewardedVideoAd.loadAd();
-//
-//        rewardedVideoAd.setAdListener(new RewardedVideoAdListener() {
-//            @Override
-//            public void onRewardedVideoCompleted() {
-//                plugin.emit(Events.REWARD_VIDEO_COMPLETE);
-//            }
-//
-//            @Override
-//            public void onLoggingImpression(Ad ad) {
-//                plugin.emit(Events.REWARD_VIDEO_IMPRESSION);
-//            }
-//
-//            @Override
-//            public void onRewardedVideoClosed() {
-//                plugin.emit(Events.REWARD_VIDEO_CLOSE);
-//            }
-//
-//            @Override
-//            public void onError(Ad ad, AdError adError) {
-//                Log.d(TAG, "Error loading ad with" + adError.getErrorMessage());
-//                plugin.emit(Events.REWARD_VIDEO_LOAD_FAIL);
-//            }
-//
-//            @Override
-//            public void onAdLoaded(Ad ad) {
-//                rewardedVideoAd.loadAd();
-//                plugin.emit(Events.REWARD_VIDEO_LOAD);
-//            }
-//
-//            @Override
-//            public void onAdClicked(Ad ad) {
-//                plugin.emit(Events.REWARD_VIDEO_CLICK);
-//            }
-//        });
-//    }
+    public void show() {
+        Appodeal.show(plugin.cordova.getActivity(), Appodeal.REWARDED_VIDEO);
+
+        Appodeal.setRewardedVideoCallbacks(new RewardedVideoCallbacks() {
+            @Override
+            public void onRewardedVideoLoaded(boolean b) {
+                Log.d(TAG, "on rewared video loaded");
+            }
+
+            @Override
+            public void onRewardedVideoFailedToLoad() {
+                Log.d(TAG, "on rewared video failed to load");
+            }
+
+            @Override
+            public void onRewardedVideoShown() {
+                Log.d(TAG, "on rewared video shown");
+            }
+
+            @Override
+            public void onRewardedVideoFinished(double v, String s) {
+                Log.d(TAG, "on rewared video finished");
+            }
+
+            @Override
+            public void onRewardedVideoClosed(boolean b) {
+                Log.d(TAG, "on rewared video closed");
+            }
+
+            @Override
+            public void onRewardedVideoExpired() {
+                Log.d(TAG, "on rewared video expired");
+            }
+
+            @Override
+            public void onRewardedVideoClicked() {
+                Log.d(TAG, "on rewared video clicked");
+            }
+        });
+    }
 }

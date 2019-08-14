@@ -1,4 +1,4 @@
-def right_version = "15+"; //version from Appodeal plugin
+def right_version = "16.+"; //version from Appodeal plugin
 configurations.all{
 	dependencies.all{ Dependency d ->
 		def right_version_copy = right_version
@@ -6,11 +6,31 @@ configurations.all{
 			right_version = d.getVersion()
 		}
 	}
-    resolutionStrategy{
-		eachDependency { DependencyResolveDetails details ->
-			if ( details.requested.name.contains('play-services') ){
-				details.useVersion right_version
-			}
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if ( details.requested.name.contains('play-services') ){
+			details.useVersion right_version
 		}
-    }
+	}
+}
+
+dependencies {
+	compile('com.google.android.exoplayer:exoplayer-core:2.8.4') {
+		transitive = true
+		exclude module: 'support-annotations'
+	}
+
+	compile('com.google.android.exoplayer:exoplayer-hls:2.8.4') {
+		transitive = true
+		exclude module: 'support-annotations'
+	}
+}
+
+repositories{
+	maven { url "https://artifactory.appodeal.com/appodeal" }
+}
+
+android {
+	defaultConfig { 
+		multiDexEnabled true
+	} 
 }
