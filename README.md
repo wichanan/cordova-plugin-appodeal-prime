@@ -24,8 +24,10 @@ add this
 
 ## Prerequisite(Android)
 
-The Audience network Android SDK requires the `android.support:recyclerview` suppoort library. Before the installation 
-please check the version of your project `android support libraries` version and add another `--variable` to the `cordova plugin add`
+Minimum Android SdkVersion=21
+
+The Audience network Android SDK requires the `com.android.support:recyclerview-v7` suppoort library. Before the installation 
+please check the version of your project `com.android.support libraries` version and add another `--variable` to the `cordova plugin add`
 
 The default uses `27+`
 
