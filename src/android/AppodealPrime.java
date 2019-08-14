@@ -40,8 +40,6 @@ public class AppodealPrime extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        // Appodeal.disableNetwork(cordova.getActivity(), AppodealNetworks.ADMOB);
-        // Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.debug);
         apiKey = this.getApiKey();
         Appodeal.initialize(
                 cordova.getActivity(),

@@ -22,6 +22,7 @@
 
 	<platform name="android">
         <preference name="ANDROID_APP_KEY" />
+        <preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+" />
 	    <config-file parent="/*" target="res/xml/config.xml">
 			<feature name="AppodealPrime">
 				<param name="android-package" value="com.appodealprime.AppodealPrime" />
@@ -54,8 +55,8 @@
 	    <framework src="com.google.android.exoplayer:exoplayer-hls:2.8.4" />
 	    <framework src="com.android.support:multidex:1.0.3" />
 
-	    <framework src="com.android.support:support-v4:27+" />
-	    <framework src="com.android.support:recyclerview-v7:27+" />
+	    <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_RECYCLERVIEW_VERSION" />
+	    <framework src="com.android.support:recyclerview-v7:$ANDROID_SUPPORT_RECYCLERVIEW_VERSION" />
 
 	    <framework src="src/android/dependency_fix.gradle" custom="true" type="gradleReference" />
 	    
