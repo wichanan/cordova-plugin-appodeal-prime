@@ -55,7 +55,7 @@ you will need to add the following line to your app `config.xml`
 
 ```javascript
 // initialize the Appodeal prime after the cordova device ready (do not use the ready function in the document.ready
-// because the app initializing time will disgustingly increase)
+// because the app initialization time will disgustingly increase)
 onDeviceReady: function() {
     this.receivedEvent('deviceready');
     ...
