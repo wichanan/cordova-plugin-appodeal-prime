@@ -43,13 +43,11 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     }
     
     func hide() {
-        self.adQueue.delegate = nil
         if (self.nativeAdView?.superview != nil) {
             self.nativeAd.delegate = nil
             self.nativeAd = nil
             self.nativeAdView.removeFromSuperview()
             self.nativeAdView = nil
-            self.adQueue = nil
         }
     }
         
