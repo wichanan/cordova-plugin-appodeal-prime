@@ -68,6 +68,6 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
         NSLog("adqueue is available")
         nativeArray = []
-        nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 1))
+        nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 2))
     }
 }
