@@ -1,9 +1,9 @@
 {
-  "version": "0.0.8",
-  "name": "cordova-appodeal-prime",
-  "description": "Cordova Appodeal Prime",
+  "version": "1.0.0",
+  "name": "cordova-appodeal-pro",
+  "description": "Appodeal plugin for Cordova",
   "cordova": {
-    "id": "cordova-plugin-appodeal-prime",
+    "id": "cordova-appodeal-pro",
     "platforms": [
       "android",
       "ios"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wichanan/cordova-plugin-appodeal-prime.git"
+    "url": "git+https://github.com/ysdidenko/cordova-plugin-appodeal-prime.git"
   },
   "files": [
     "*.ts",
@@ -35,12 +35,12 @@
   "devDependencies": {
     "cordova": "^9.0.0"
   },
-  "author": "Wichanan Thian",
+  "author": "Iurii Didenko",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wichanan/cordova-plugin-appodeal-prime/issues"
+    "url": "https://github.com/ysdidenko/cordova-plugin-appodeal-prime/issues"
   },
-  "homepage": "https://github.com/wichanan/cordova-plugin-appodeal-prime#readme",
+  "homepage": "https://github.com/ysdidenko/cordova-plugin-appodeal-prime#readme",
   "main": "index.js",
   "directories": {
     "example": "example"
