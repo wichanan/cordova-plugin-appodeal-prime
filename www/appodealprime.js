@@ -47,7 +47,7 @@ function nativeConfig(data) {
     }
 }
 
-AppodealPrime.pluginVersion = '0.0.1';
+AppodealPrime.pluginVersion = '0.0.9';
 
 AppodealPrime.ready = function() {
     return new Promise((resolve, reject) => {
