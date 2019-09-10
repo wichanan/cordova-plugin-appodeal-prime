@@ -113,6 +113,7 @@ public class BannerAd extends AdBase {
             @Override
             public void onBannerShown() {
                 Log.d(TAG, "Banner shown");
+                plugin.emit(Events.BANNER_SHOW);
             }
 
             @Override

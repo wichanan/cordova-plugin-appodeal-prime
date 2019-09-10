@@ -105,7 +105,13 @@ public class APNativeAd extends AdBase {
             nativeAd.destroy();
             View view = plugin.webView.getView();
             ViewGroup wvParentView = (ViewGroup) view.getParent();
-            wvParentView.removeView(nativeAdView);
+            int countwv = wvParentView.getChildCount();
+            for (int i = 0; i< countwv; i++) {
+                View v = wvParentView.getChildAt(i);
+                if (v instanceof NativeAdView) {
+                    wvParentView.removeView(v);
+                }
+            }
         }
     }
 
@@ -121,21 +127,25 @@ public class APNativeAd extends AdBase {
             @Override
             public void onNativeLoaded() {
                 Log.d(TAG, "Native loaded");
+                plugin.emit(Events.NATIVE_LOAD);
             }
 
             @Override
             public void onNativeFailedToLoad() {
                 Log.d(TAG, "Native fail to load");
+                plugin.emit(Events.NATIVE_LOAD_FAIL);
             }
 
             @Override
             public void onNativeShown(com.appodeal.ads.NativeAd nativeAd) {
                 Log.d(TAG, "Native shown");
+                plugin.emit(Events.NATIVE_SHOW);
             }
 
             @Override
             public void onNativeClicked(com.appodeal.ads.NativeAd nativeAd) {
                 Log.d(TAG, "Native clicked");
+                plugin.emit(Events.NATIVE_CLICK);
             }
 
             @Override

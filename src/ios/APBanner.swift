@@ -29,15 +29,19 @@ class APBanner: APBase, AppodealBannerDelegate {
     
     func bannerDidLoadAdIsPrecache(_ precache: Bool){
         NSLog("banner was loaded")
+        plugin.emit(eventType: APEvents.bannerLoad)
     }
     func bannerDidFailToLoadAd(){
         NSLog("banner failed to load");
+        plugin.emit(eventType: APEvents.bannerLoadFail)
     }
     func bannerDidClick(){
         NSLog("banner was clicked")
+        plugin.emit(eventType: APEvents.bannerClick)
     }
     func bannerDidShow(){
         NSLog("banner was shown")
+        plugin.emit(eventType: APEvents.bannerShow)
     }
     func bannerDidExpired(){
         NSLog("banner did expire and could not be shown")

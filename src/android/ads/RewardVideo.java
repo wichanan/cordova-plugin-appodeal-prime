@@ -45,36 +45,42 @@ public class RewardVideo extends AdBase  {
             @Override
             public void onRewardedVideoLoaded(boolean b) {
                 Log.d(TAG, "on rewared video loaded");
+                plugin.emit(Events.REWARD_VIDEO_LOAD);
             }
 
             @Override
             public void onRewardedVideoFailedToLoad() {
                 Log.d(TAG, "on rewared video failed to load");
+                plugin.emit(Events.REWARD_VIDEO_LOAD_FAIL);
             }
 
             @Override
             public void onRewardedVideoShown() {
                 Log.d(TAG, "on rewared video shown");
+                plugin.emit(Events.REWARD_VIDEO_SHOW);
             }
 
             @Override
             public void onRewardedVideoFinished(double v, String s) {
                 Log.d(TAG, "on rewared video finished");
+                plugin.emit(Events.REWARD_VIDEO_COMPLETE);
             }
 
             @Override
             public void onRewardedVideoClosed(boolean b) {
                 Log.d(TAG, "on rewared video closed");
+                plugin.emit(Events.REWARD_VIDEO_CLOSE);
             }
 
             @Override
             public void onRewardedVideoExpired() {
-                Log.d(TAG, "on rewared video expired");
+                Log.d(TAG, "on rewared video expired");\
             }
 
             @Override
             public void onRewardedVideoClicked() {
                 Log.d(TAG, "on rewared video clicked");
+                plugin.emit(Events.REWARD_VIDEO_CLICK);
             }
         });
     }

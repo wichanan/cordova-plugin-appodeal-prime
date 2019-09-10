@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin 
 	id="cordova-appodeal-prime"
-	version="0.0.8"
+	version="0.0.9"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>Appodeal Prime</name>
@@ -60,7 +60,7 @@
 
 	    <framework src="src/android/dependency_fix.gradle" custom="true" type="gradleReference" />
 	    
-	    <framework src="com.appodeal.ads:maxdex:2.5.6" />
+	    <framework src="com.appodeal.ads:maxdex:2.5.7" />
 	    <framework src="com.appodeal.optional:flurry-ads:11.6.0" />
 	    <framework src="com.appodeal.optional:flurry-analytics:11.6.0" />
 
@@ -138,7 +138,7 @@
 		<framework src="libxml2.2.dylib"/>
 		<framework src="libz.dylib"/>
 
-		<pod name="Appodeal" spec="2.5.7" />
+		<pod name="Appodeal" spec="2.5.8" />
 
         <source-file src="src/ios/APBase.swift" />
         <source-file src="src/ios/APBanner.swift" />

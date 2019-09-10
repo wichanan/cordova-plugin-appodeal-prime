@@ -2,6 +2,7 @@
 class AppodealPrime: CDVPlugin {
     static let testAdID = ""
     var isTestMode = true
+    var originalHeight: CGFloat!
     
     var readyCallbackId: String!
     
@@ -14,6 +15,9 @@ class AppodealPrime: CDVPlugin {
         let apiKey = getAPIKey()
 //        setTestEnv()
         Appodeal.initialize(withApiKey: apiKey, types: [AppodealAdType.banner, AppodealAdType.interstitial, AppodealAdType.nativeAd, AppodealAdType.rewardedVideo], hasConsent: true)
+        if (originalHeight == nil) {
+            originalHeight = plugin.webView.frame.height
+        }
     }
     
     func getAPIKey() -> String {
