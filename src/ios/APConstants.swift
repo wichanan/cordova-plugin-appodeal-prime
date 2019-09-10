@@ -1,5 +1,5 @@
 struct APEvents {
-    static let bannerClick = "appobanner.click"
+    static let bannerClick = "appodeal.banner.click"
     static let bannerLoadFail = "appodeal.banner.load_fail"
     static let bannerLoad = "appodeal.banner.load"
     static let bannerShow = "appodeal.banner.show"

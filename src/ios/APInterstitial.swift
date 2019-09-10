@@ -1,5 +1,4 @@
 class APInterstitial: APBase, AppodealInterstitialDelegate {
-    var originalHeight: CGFloat!
     var view: UIView {
         return self.plugin.viewController.view
     }
@@ -8,9 +7,6 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
         Appodeal.showAd(.interstitial, rootViewController: self.plugin.viewController)
         Appodeal.setAutocache(false, types:.interstitial)
         Appodeal.setInterstitialDelegate(self)
-        if (originalHeight == nil) {
-            originalHeight = plugin.webView.frame.height
-        }
     }
 
     // Method called when precache (cheap and fast load) or usual interstitial view did load
@@ -42,11 +38,13 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
     
     // Method called after interstitial leave screeen
     func interstitialDidDismiss() {
-        plugin.webView.frame = CGRect(
+        if (plugin.originalHeight != nil){
+            plugin.webView.frame = CGRect(
             x: plugin.webView.bounds.origin.x,
             y: plugin.webView.bounds.origin.y,
             width: plugin.webView.bounds.width,
-            height: originalHeight)
+            height: plugin.originalHeight)
+        }
         NSLog("interstitial did dismiss")
         plugin.emit(eventType: APEvents.interstitialClose)
     }
