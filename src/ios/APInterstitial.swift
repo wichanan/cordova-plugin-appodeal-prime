@@ -12,6 +12,14 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
             originalHeight = plugin.webView.frame.height
         }
     }
+
+    // Method called when precache (cheap and fast load) or usual interstitial view did load
+    //
+    // - Warning: If you want show only expensive ad, ignore this callback call with precache equal to YES
+    // - Parameter precache: If precache is YES it's mean that precache loaded
+    func interstitialDidLoadAdIsPrecache(_ precache: Bool) {
+        plugin.emit(eventType: APEvents.interstitialLoad)
+    }
     
     // Method called if interstitial mediation failed
     func interstitialDidFailToLoadAd() {
@@ -29,7 +37,7 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
     // Method called when interstitial will display on screen
     func interstitialWillPresent() {
         NSLog("interstitial will display")
-        plugin.emit(eventType: APEvents.interstitialWillDisplay)
+        plugin.emit(eventType: APEvents.interstitialShow)
     }
     
     // Method called after interstitial leave screeen
@@ -52,6 +60,5 @@ class APInterstitial: APBase, AppodealInterstitialDelegate {
     // Method called when interstitial did expire and could not be shown
     func interstitialDidExpired(){
         NSLog("interstitial did expire")
-        plugin.emit(eventType: APEvents.interstitialExpired)
     }
 }

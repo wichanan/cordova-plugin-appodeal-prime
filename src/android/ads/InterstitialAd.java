@@ -44,26 +44,31 @@ public class InterstitialAd extends AdBase {
             @Override
             public void onInterstitialLoaded(boolean b) {
                 Log.d(TAG, "on Interstitial loaded");
+                plugin.emit(Events.INTERSTITIAL_LOAD);
             }
 
             @Override
             public void onInterstitialFailedToLoad() {
                 Log.d(TAG, "Interstitial Failed to load");
+                plugin.emit(Events.INTERSTITIAL_LOAD_FAIL);
             }
 
             @Override
             public void onInterstitialShown() {
                 Log.d(TAG, "Interstitial shown");
+                plugin.emit(Events.INTERSTITIAL_SHOW);
             }
 
             @Override
             public void onInterstitialClicked() {
                 Log.d(TAG, "Interstitial clicked");
+                plugin.emit(Events.INTERSTITIAL_CLICK);
             }
 
             @Override
             public void onInterstitialClosed() {
                 Log.d(TAG, "Interstitial closed");
+                plugin.emit(Events.INTERSTITIAL_CLOSE);
             }
 
             @Override

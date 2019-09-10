@@ -53,19 +53,23 @@ class APNative: APBase, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegat
         
     func nativeAdWillLogImpression(_ nativeAd: APDNativeAd) {
         NSLog("native will log impression")
+        plugin.emit(eventType: APEvents.nativeShow)
     }
     
     func nativeAdWillLogUserInteraction(_ nativeAd: APDNativeAd) {
         NSLog("native will log user interaction")
+        plugin.emit(eventType: APEvents.nativeClick)
     }
     
     func adQueue(_ adQueue: APDNativeAdQueue, failedWithError error: Error) {
         print("adqueue failed with error " + error.localizedDescription)
+        plugin.emit(eventType: APEvents.nativeLoadFail)
     }
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
         NSLog("adqueue is available")
         nativeArray = []
         nativeArray.append(contentsOf: adQueue.getNativeAds(ofCount: 2))
+        plugin.emit(eventType: APEvents.nativeLoad)
     }
 }
