@@ -74,7 +74,7 @@ public class RewardVideo extends AdBase  {
 
             @Override
             public void onRewardedVideoExpired() {
-                Log.d(TAG, "on rewared video expired");\
+                Log.d(TAG, "on rewared video expired");
             }
 
             @Override
