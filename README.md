@@ -1,6 +1,6 @@
 # Cordova Plugin Appodeal Prime
 
-## Warning the iOS podfiles of Appodeal has the size of 1.2GB please use a decent internet to install this plugin
+## Warning the iOS podfiles of Appodeal has the size of 1.2GB please use a decent internet connection to install this plugin
 
 ## Installation
 

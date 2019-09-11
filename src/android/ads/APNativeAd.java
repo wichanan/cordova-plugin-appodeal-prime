@@ -24,6 +24,7 @@ import com.appodeal.ads.NativeMediaView;
 import com.appodeal.ads.native_ad.views.NativeAdViewContentStream;
 import com.appodealprime.Action;
 import com.appodealprime.AppodealPrime;
+import com.appodealprime.Events;
 
 public class APNativeAd extends AdBase {
     private static final String TAG = "AP::NativeADs";
