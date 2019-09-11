@@ -115,5 +115,36 @@ appodealprime.showRewardedVideo('YOUR_PLACEMENT_ID')
 .catch(err => {
    console.log('error showing rewarded video:');
 });
+
+// To get the Ad Event Listener you must implement the document.addEventListener('event name', () =>{}) like this
+
+document.addEventListener('appodeal.interstitial.close', () => {
+  console.log('interstitial close listener');
+  // your code here
+});
+
+// here is the list of events for appodeal ads
+"appodeal.banner.click"
+"appodeal.banner.load_fail"
+"appodeal.banner.load"
+"appodeal.banner.show"
+"appodeal.interstitial.click"
+"appodeal.interstitial.show"
+"appodeal.interstitial.close"
+"appodeal.interstitial.show_fail"
+"appodeal.interstitial.load"
+"appodeal.interstitial.load_fail"
+"appodeal.interstitial.will_close"
+"appodeal.reward_video.click"
+"appodeal.reward_video.complete"
+"appodeal.reward_video.show_fail"
+"appodeal.reward_video.show"
+"appodeal.reward_video.load"
+"appodeal.reward_video.close"
+"appodeal.reward_video.load_fail"
+"appodeal.native.click"
+"appodeal.native.show"
+"appodeal.native.load_fail"
+"appodeal.native.load"
 ```
 
