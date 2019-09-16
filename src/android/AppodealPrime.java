@@ -64,7 +64,7 @@ public class AppodealPrime extends CordovaPlugin {
             JSONObject data = new JSONObject();
             try {
                 data.put("platform", "android");
-                data.put("SDK Version", "5.4.1");
+                data.put("SDK Version", "2.5.7");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
