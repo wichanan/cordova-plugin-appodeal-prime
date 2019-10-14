@@ -34,6 +34,8 @@
 			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+			<uses-permission android:name="android.permission.VIBRATE" />
+            <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 	    </config-file>
 	    <config-file parent="/manifest/application" target="AndroidManifest.xml">
 	    	<meta-data
@@ -60,7 +62,7 @@
 
 	    <framework src="src/android/dependency_fix.gradle" custom="true" type="gradleReference" />
 	    
-	    <framework src="com.appodeal.ads:maxdex:2.5.7" />
+	    <framework src="com.appodeal.ads:maxdex:2.5.8" />
 	    <framework src="com.appodeal.optional:flurry-ads:11.6.0" />
 	    <framework src="com.appodeal.optional:flurry-analytics:11.6.0" />
 
@@ -138,7 +140,7 @@
 		<framework src="libxml2.2.dylib"/>
 		<framework src="libz.dylib"/>
 
-		<pod name="Appodeal" spec="2.5.9" />
+		<pod name="Appodeal" spec="2.5.11" />
 
         <source-file src="src/ios/APBase.swift" />
         <source-file src="src/ios/APBanner.swift" />
